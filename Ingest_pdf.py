@@ -5,8 +5,11 @@ from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-CHUNK_SIZE    = 1000
-CHUNK_OVERLAP = 200
+from config import general_settings
+
+CHUNK_SIZE    = general_settings['ingestion']['chunk_size']
+CHUNK_OVERLAP = general_settings['ingestion']['chunk_overlap']
+SEPARATORS    = general_settings['ingestion']['separators']
 
 
 def ingest(pdf_path: str,
@@ -41,7 +44,7 @@ def ingest(pdf_path: str,
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=CHUNK_SIZE,
         chunk_overlap=CHUNK_OVERLAP,
-        separators=["\n\n", "\n", ".", " "],
+        separators=SEPARATORS,
     )
     chunks = loader.load_and_split(text_splitter=splitter)
     print(f"[ingest] {len(chunks)} chunks created")
