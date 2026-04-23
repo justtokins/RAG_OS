@@ -5,15 +5,19 @@ from pathlib import Path
 
 from fastapi import FastAPI, UploadFile, File, HTTPException, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
 from dotenv import load_dotenv
 from groq import Groq
 from langchain_community.embeddings import HuggingFaceEmbeddings
 
-from config import general_settings
+from config_loader import general_settings
+from models import QuestionRequest, AnswerResponse, IngestResponse, HomeResponse, HealthResponse, BooksResponse
+from logger import get_logger
 from database import setup_db, log_ingestion, list_books
 from ingest_pdf import ingest, load_existing
 from query import bot
+
+# Initialize logger
+logger = get_logger(level=general_settings['app']['log_level'])
 
 load_dotenv()
 
@@ -106,23 +110,6 @@ def get_embeddings(request: Request):
     return request.app.state.embeddings
 
 
-#Response Models
-class QuestionRequest(BaseModel):
-    question:   str
-    session_id: str = "default"
-
-
-class AnswerResponse(BaseModel):
-    answer:     str
-    session_id: str
-
-
-class IngestResponse(BaseModel):
-    message:    str
-    filename:   str
-    chunks:     int
-
-
 #Routes
 @app.get("/")
 def home():
@@ -148,9 +135,9 @@ def health(request: Request):
 
 @app.post("/upload")
 async def upload_pdf(
+    request: Request,
     file: UploadFile = File(...),
     embeddings=Depends(get_embeddings),
-    request: Request,
 ):
     """
     Upload a PDF to the server.

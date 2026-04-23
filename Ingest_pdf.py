@@ -5,7 +5,10 @@ from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-from config import general_settings
+from config_loader import general_settings
+from logger import get_logger
+
+logger = get_logger()
 
 CHUNK_SIZE    = general_settings['ingestion']['chunk_size']
 CHUNK_OVERLAP = general_settings['ingestion']['chunk_overlap']

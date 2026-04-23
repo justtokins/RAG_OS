@@ -7,7 +7,10 @@ from tools import (
     tool_generate_quiz,
     tool_compare_concepts,
 )
-from config import agent_settings, general_settings
+from config_loader import agent_settings, general_settings
+from logger import get_logger
+
+logger = get_logger()
 
 DEFINITION_TRIGGERS = agent_settings['intent_triggers']['definition']
 QUIZ_TRIGGERS       = agent_settings['intent_triggers']['quiz']
