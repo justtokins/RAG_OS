@@ -1,10 +1,15 @@
 """
-Structured logging module with console + file outputs.
+Structured logging module with console + rotating file output.
+
+Why RotatingFileHandler?
+    Prevents the log file growing forever on a long-running server.
+    When the file hits max_bytes it is renamed app.log.1, app.log.2 etc.
+    backup_count controls how many rotated files are kept before deletion.
 """
 import logging
+import logging.handlers   # ← MUST be here — used in __init__ below
 import sys
 from pathlib import Path
-from datetime import datetime
 from typing import Optional
 
 
@@ -18,85 +23,72 @@ class StructuredLogger:
         name: str = "rag_system",
         level: str = "INFO",
         log_file: Optional[str] = None,
-        max_bytes: int = 5242880,  # 5MB
+        max_bytes: int = 5_242_880,   # 5 MB
         backup_count: int = 3,
     ):
-        """
-        Initialize structured logger.
-        
-        Parameters
-        ----------
-        name : str
-            Logger name
-        level : str
-            Logging level ('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL')
-        log_file : str, optional
-            Log file path relative to logs/ directory
-        max_bytes : int
-            Max size of log file before rotation
-        backup_count : int
-            Number of backup logs to keep
-        """
         self.logger = logging.getLogger(name)
-        self.logger.setLevel(getattr(logging, level))
-        
-        # Clear any existing handlers
+        self.logger.setLevel(getattr(logging, level.upper()))
+
+        # Clear existing handlers so re-initialisation does not duplicate output
         self.logger.handlers = []
-        
-        # Formatter
+
         formatter = logging.Formatter(
-            fmt='%(asctime)s | %(levelname)-8s | %(name)s | %(message)s',
-            datefmt='%Y-%m-%d %H:%M:%S'
+            fmt="%(asctime)s | %(levelname)-8s | %(name)s | %(message)s",
+            datefmt="%Y-%m-%d %H:%M:%S",
         )
-        
-        # Console handler
-        console_handler = logging.StreamHandler(sys.stdout)
-        console_handler.setLevel(getattr(logging, level))
-        console_handler.setFormatter(formatter)
-        self.logger.addHandler(console_handler)
-        
-        # File handler
+
+        # Console handler — always present
+        console = logging.StreamHandler(sys.stdout)
+        console.setLevel(getattr(logging, level.upper()))
+        console.setFormatter(formatter)
+        self.logger.addHandler(console)
+
+        # Rotating file handler — only when log_file is provided
         if log_file:
             self.LOG_DIR.mkdir(exist_ok=True)
             log_path = self.LOG_DIR / log_file
-            
             file_handler = logging.handlers.RotatingFileHandler(
                 log_path,
                 maxBytes=max_bytes,
                 backupCount=backup_count,
+                encoding="utf-8",
             )
-            file_handler.setLevel(getattr(logging, level))
+            file_handler.setLevel(getattr(logging, level.upper()))
             file_handler.setFormatter(formatter)
             self.logger.addHandler(file_handler)
     
+    # ── Logging methods ───────────────────────────────────────────
     def debug(self, msg: str, **kwargs):
-        """Log debug message."""
         self.logger.debug(msg, **kwargs)
-    
+
     def info(self, msg: str, **kwargs):
-        """Log info message."""
         self.logger.info(msg, **kwargs)
-    
+
     def warning(self, msg: str, **kwargs):
-        """Log warning message."""
         self.logger.warning(msg, **kwargs)
-    
+
     def error(self, msg: str, **kwargs):
-        """Log error message."""
         self.logger.error(msg, **kwargs)
-    
+
     def critical(self, msg: str, **kwargs):
-        """Log critical message."""
         self.logger.critical(msg, **kwargs)
-    
+
     def event(self, event_name: str, **details):
-        """Log a structured event."""
+        """
+        Log a structured event with key=value pairs.
+
+        Usage:
+            logger.event("tool_selected", intent="quiz", tool="generate_quiz")
+
+        Produces:
+            2024-01-01 12:00:00 | INFO     | rag_system | EVENT: tool_selected | intent=quiz | tool=generate_quiz
+        """
         details_str = " | ".join(f"{k}={v}" for k, v in details.items())
         self.logger.info(f"EVENT: {event_name} | {details_str}")
 
 
-# Global logger instance
-_logger = None
+# ── Global singleton ──────────────────────────────────────────────────────────
+_logger: Optional[StructuredLogger] = None
 
 
 def get_logger(
@@ -104,12 +96,14 @@ def get_logger(
     level: str = "INFO",
     log_file: Optional[str] = "app.log",
 ) -> StructuredLogger:
-    """Get or create the global logger."""
+    """
+    Return the global logger, creating it on first call.
+
+    All modules call get_logger() with no arguments.
+    main.py calls it first with the level from general_settings,
+    so every subsequent call gets the already-configured instance.
+    """
     global _logger
     if _logger is None:
         _logger = StructuredLogger(name=name, level=level, log_file=log_file)
     return _logger
-
-
-# Import logging.handlers so the RotatingFileHandler can be used
-import logging.handlers
