@@ -12,7 +12,7 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 from config_loader import general_settings
 from models import QuestionRequest, AnswerResponse, IngestResponse, HomeResponse, HealthResponse, BooksResponse
 from logger import get_logger
-from database import setup_db, log_ingestion, list_books
+from database_pool import setup_db, log_ingestion, list_books, close_all_connections
 from ingest_pdf import ingest, load_existing
 from query import bot
 
@@ -70,6 +70,7 @@ async def lifespan(app: FastAPI):
     yield  # server runs here
 
     print("[shutdown] Cleaning up...")
+    close_all_connections()
 
 
 #App & Middleware 
