@@ -2,7 +2,8 @@ from langchain_community.vectorstores import Chroma
 from groq import Groq
 from database import save_message, get_history
 from agent import route
-from config import general_settings
+from config_loader import general_settings
+from logger import get_logger
 
 GROQ_MODEL = general_settings['llm']['model']
 
