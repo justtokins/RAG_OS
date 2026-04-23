@@ -165,7 +165,7 @@ async def upload_pdf(
     if not file.filename:
         raise HTTPException(status_code=400, detail="Uploaded file has no name.")
     
-    if not file.filename.endswith(".pdf"):
+    if not file.filename.lower().endswith(".pdf"):
         raise HTTPException(status_code=400, detail="Only PDF files accepted.")
     
     filename = file.filename.rsplit(".", 1)[0]  # remove .pdf extension for logging
