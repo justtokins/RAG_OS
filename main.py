@@ -10,15 +10,18 @@ from dotenv import load_dotenv
 from groq import Groq
 from langchain_community.embeddings import HuggingFaceEmbeddings
 
+from config import general_settings
 from database import setup_db, log_ingestion, list_books
 from ingest_pdf import ingest, load_existing
 from query import bot
 
 load_dotenv()
 
-VECTOR_DB_DIR  = "./OS_base"
-UPLOADS_DIR    = "./uploads"
-EMBEDDING_MODEL = "all-MiniLM-L6-v2"
+VECTOR_DB_DIR  = general_settings['embedding']['vector_db_dir']
+UPLOADS_DIR    = general_settings['ingestion']['uploads_dir']
+EMBEDDING_MODEL = general_settings['embedding']['model_name']
+APP_TITLE      = general_settings['app']['name']
+APP_VERSION    = general_settings['app']['version']
 
 
 #Startup & Shutdown
@@ -67,9 +70,9 @@ async def lifespan(app: FastAPI):
 
 #App & Middleware 
 app = FastAPI(
-    title="OS RAG Assistant",
+    title=APP_TITLE,
     description="Agentic RAG system for Operating Systems textbooks",
-    version="1.0.0",
+    version=APP_VERSION,
     lifespan=lifespan,
 )
 
@@ -147,7 +150,7 @@ def health(request: Request):
 async def upload_pdf(
     file: UploadFile = File(...),
     embeddings=Depends(get_embeddings),
-    request: Request = None,
+    request: Request,
 ):
     """
     Upload a PDF to the server.
@@ -159,8 +162,13 @@ async def upload_pdf(
     Accepts multipart/form-data — any HTTP client or frontend
     can call this with a file picker input.
     """
+    if not file.filename:
+        raise HTTPException(status_code=400, detail="Uploaded file has no name.")
+    
     if not file.filename.endswith(".pdf"):
         raise HTTPException(status_code=400, detail="Only PDF files accepted.")
+    
+    filename = file.filename.rsplit(".", 1)[0]  # remove .pdf extension for logging
 
     # Save to uploads folder
     save_path = Path(UPLOADS_DIR) / file.filename

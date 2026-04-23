@@ -7,13 +7,14 @@ from tools import (
     tool_generate_quiz,
     tool_compare_concepts,
 )
+from config import agent_settings, general_settings
 
-DEFINITION_TRIGGERS = ["what is", "what are", "define", "definition of",
-                        "meaning of", "explain the term", "what does"]
-QUIZ_TRIGGERS       = ["quiz me", "test me", "give me questions",
-                        "practice questions", "mcq", "quiz on"]
-COMPARE_TRIGGERS    = ["difference between", "compare", " vs ", "versus", "contrast"]
-WIKIPEDIA_TRIGGERS  = ["who invented", "history of", "when was", "origin of"]
+DEFINITION_TRIGGERS = agent_settings['intent_triggers']['definition']
+QUIZ_TRIGGERS       = agent_settings['intent_triggers']['quiz']
+COMPARE_TRIGGERS    = agent_settings['intent_triggers']['compare']
+WIKIPEDIA_TRIGGERS  = agent_settings['intent_triggers']['wikipedia']
+TOOLS_ENABLED       = agent_settings['tools_enabled']
+TOP_K               = general_settings['retrieval']['top_k']
 
 
 def detect_intent(user_input: str) -> str:
@@ -76,23 +77,30 @@ def route(user_input: str, vector_db: Chroma) -> str:
 
     if intent == "quiz":
         topic = extract_quiz_topic(user_input)
-        return tool_generate_quiz(vector_db, topic)
+        if TOOLS_ENABLED.get("generate_quiz", True):
+            return tool_generate_quiz(vector_db, topic)
+        return tool_retrieve_textbook(vector_db, user_input, k=TOP_K)
 
     if intent == "compare":
-        a, b = extract_comparison_terms(user_input)
-        return tool_compare_concepts(vector_db, a, b)
+        if TOOLS_ENABLED.get("compare_concepts", True):
+            a, b = extract_comparison_terms(user_input)
+            return tool_compare_concepts(vector_db, a, b)
+        return tool_retrieve_textbook(vector_db, user_input, k=TOP_K)
 
     if intent == "wikipedia":
-        wiki    = tool_search_wikipedia(user_input)
-        textbook = tool_retrieve_textbook(vector_db, user_input, k=2)
-        return f"{wiki}\n\nFROM TEXTBOOK:\n{textbook}"
+        if TOOLS_ENABLED.get("search_wikipedia", True):
+            wiki    = tool_search_wikipedia(user_input)
+            textbook = tool_retrieve_textbook(vector_db, user_input, k=TOP_K)
+            return f"{wiki}\n\nFROM TEXTBOOK:\n{textbook}"
+        return tool_retrieve_textbook(vector_db, user_input, k=TOP_K)
 
     if intent == "define":
-        term       = extract_term(user_input)
-        definition = tool_define_term(term)
-        textbook   = tool_retrieve_textbook(vector_db, term, k=1)
-        if definition:
-            return f"QUICK DEFINITION:\n{definition}\n\nFROM TEXTBOOK:\n{textbook}"
+        term = extract_term(user_input)
+        textbook = tool_retrieve_textbook(vector_db, term, k=TOP_K)
+        if TOOLS_ENABLED.get("define_term", True):
+            definition = tool_define_term(term)
+            if definition:
+                return f"QUICK DEFINITION:\n{definition}\n\nFROM TEXTBOOK:\n{textbook}"
         return textbook
 
-    return tool_retrieve_textbook(vector_db, user_input)
+    return tool_retrieve_textbook(vector_db, user_input, k=TOP_K)

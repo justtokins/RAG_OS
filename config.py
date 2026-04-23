@@ -1,13 +1,15 @@
 import json
-import os
+from pathlib import Path
 
-# Load configuration files
-def load_config(file_path):
-    if os.path.exists(file_path):
-        with open(file_path, 'r') as f:
+BASE_DIR = Path(__file__).resolve().parent
+
+# Load configuration files relative to this module.
+def load_config(file_name):
+    file_path = BASE_DIR / file_name
+    if file_path.exists():
+        with file_path.open('r', encoding='utf-8') as f:
             return json.load(f)
-    else:
-        raise FileNotFoundError(f"Configuration file not found: {file_path}")
+    raise FileNotFoundError(f"Configuration file not found: {file_path}")
 
 # Load all configs
 general_settings = load_config('general_settings.json')
