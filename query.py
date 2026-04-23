@@ -5,6 +5,7 @@ from agent import route
 from config_loader import general_settings
 from logger import get_logger
 
+logger = get_logger()
 GROQ_MODEL = general_settings['llm']['model']
 
 

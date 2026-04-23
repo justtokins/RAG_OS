@@ -2,6 +2,39 @@ import wikipedia
 from langchain_community.vectorstores import Chroma
 
 
+# ── precompute term definitions (avoid recreation on every call)
+_TERM_DEFINITIONS = {
+    "process":        "A program in execution. The OS unit of work. "
+                      "Like a running app on your phone.",
+    "thread":         "A lightweight unit inside a process that shares "
+                      "the same memory. Like multiple workers in one office.",
+    "deadlock":       "Two or more processes waiting for each other forever — "
+                      "none can proceed. Like two cars blocking each other "
+                      "on a one-lane bridge.",
+    "semaphore":      "A counter that controls access to a shared resource. "
+                      "Like a bouncer enforcing a club's maximum capacity.",
+    "mutex":          "A lock allowing only one thread at a time. "
+                      "Like a single bathroom key in an office.",
+    "paging":         "Dividing memory into fixed-size pages to eliminate "
+                      "fragmentation. Like dividing a notebook into equal sections.",
+    "scheduling":     "The OS deciding which process runs next on the CPU. "
+                      "Like a restaurant manager deciding which order to cook first.",
+    "context switch": "Saving one process's state and loading another's. "
+                      "Like a chef pausing one dish to tend another.",
+    "virtual memory": "Giving each process the illusion of a large private "
+                      "memory space, backed by disk when RAM is full.",
+    "inode":          "A data structure storing file metadata — size, owner, "
+                      "disk location. Like a library card for a file.",
+    "syscall":        "A controlled way for user programs to request OS services. "
+                      "Like pressing a help button to call a supermarket employee.",
+    "interrupt":      "A signal that pauses the CPU to handle an urgent event. "
+                      "Like a fire alarm pausing a meeting.",
+    "cache":          "Fast temporary storage holding recently used data. "
+                      "Like keeping frequently used tools on your desk "
+                      "instead of walking to the storeroom each time.",
+}
+
+
 # ── Tool 1 Textbook Retrieval
 def tool_retrieve_textbook(vector_db: Chroma, query: str, k: int = 3) -> str:
     """
@@ -31,37 +64,8 @@ def tool_define_term(term: str) -> str | None:
     Returns a plain-English definition for common OS terms.
     Returns None if not found — caller falls back to retrieval.
     """
-    definitions = {
-        "process":        "A program in execution. The OS unit of work. "
-                          "Like a running app on your phone.",
-        "thread":         "A lightweight unit inside a process that shares "
-                          "the same memory. Like multiple workers in one office.",
-        "deadlock":       "Two or more processes waiting for each other forever — "
-                          "none can proceed. Like two cars blocking each other "
-                          "on a one-lane bridge.",
-        "semaphore":      "A counter that controls access to a shared resource. "
-                          "Like a bouncer enforcing a club's maximum capacity.",
-        "mutex":          "A lock allowing only one thread at a time. "
-                          "Like a single bathroom key in an office.",
-        "paging":         "Dividing memory into fixed-size pages to eliminate "
-                          "fragmentation. Like dividing a notebook into equal sections.",
-        "scheduling":     "The OS deciding which process runs next on the CPU. "
-                          "Like a restaurant manager deciding which order to cook first.",
-        "context switch": "Saving one process's state and loading another's. "
-                          "Like a chef pausing one dish to tend another.",
-        "virtual memory": "Giving each process the illusion of a large private "
-                          "memory space, backed by disk when RAM is full.",
-        "inode":          "A data structure storing file metadata — size, owner, "
-                          "disk location. Like a library card for a file.",
-        "syscall":        "A controlled way for user programs to request OS services. "
-                          "Like pressing a help button to call a supermarket employee.",
-        "interrupt":      "A signal that pauses the CPU to handle an urgent event. "
-                          "Like a fire alarm pausing a meeting.",
-        "cache":          "Fast temporary storage holding recently used data. "
-                          "Like keeping frequently used tools on your desk "
-                          "instead of walking to the storeroom each time.",
-    }
-    return definitions.get(term.lower().strip())
+    return _TERM_DEFINITIONS.get(term.lower().strip())
+
 
 
 # ── Tool 3  Wikipedia Fallback
