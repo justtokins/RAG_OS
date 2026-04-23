@@ -1,0 +1,98 @@
+{
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "retrieve_textbook",
+        "description": "Semantic search over the OS textbook vector store. Embeds the query into the same 384-dim space as stored chunks, computes cosine similarity, returns the top-k passages.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "The search query to find relevant passages in the textbook."
+            },
+            "k": {
+              "type": "integer",
+              "description": "Number of top passages to retrieve. Default is 3.",
+              "default": 3
+            }
+          },
+          "required": ["query"]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "define_term",
+        "description": "Returns a plain-English definition for common OS terms. Returns None if not found — caller falls back to retrieval.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "term": {
+              "type": "string",
+              "description": "The OS term to define."
+            }
+          },
+          "required": ["term"]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "search_wikipedia",
+        "description": "Fetch a short summary from Wikipedia. Used when the question goes beyond the uploaded textbook content.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "The query to search on Wikipedia."
+            }
+          },
+          "required": ["query"]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "generate_quiz",
+        "description": "Retrieve content on a topic and structure a prompt asking the LLM to generate quiz questions from it.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "topic": {
+              "type": "string",
+              "description": "The topic to generate quiz questions about."
+            }
+          },
+          "required": ["topic"]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "compare_concepts",
+        "description": "Retrieve textbook content on two concepts separately, then combine. Used for 'difference between X and Y' questions.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "concept_a": {
+              "type": "string",
+              "description": "The first concept to compare."
+            },
+            "concept_b": {
+              "type": "string",
+              "description": "The second concept to compare."
+            }
+          },
+          "required": ["concept_a", "concept_b"]
+        }
+      }
+    }
+  ]
+}

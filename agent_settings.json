@@ -1,0 +1,41 @@
+{
+  "intent_triggers": {
+    "definition": [
+      "what is",
+      "what are",
+      "define",
+      "definition of",
+      "meaning of",
+      "explain the term",
+      "what does"
+    ],
+    "quiz": [
+      "quiz me",
+      "test me",
+      "give me questions",
+      "practice questions",
+      "mcq",
+      "quiz on"
+    ],
+    "compare": [
+      "difference between",
+      "compare",
+      " vs ",
+      "versus",
+      "contrast"
+    ],
+    "wikipedia": [
+      "who invented",
+      "history of",
+      "when was",
+      "origin of"
+    ]
+  },
+  "tools_enabled": {
+    "retrieve_textbook": true,
+    "define_term": true,
+    "search_wikipedia": true,
+    "generate_quiz": true,
+    "compare_concepts": true
+  }
+}
