@@ -1,0 +1,217 @@
+2026-04-24 02:33:04 | INFO     | rag_system | AGENT | Registered tools from function_calls.json: {'search_wikipedia', 'define_term', 'retrieve_textbook', 'compare_concepts', 'generate_quiz'}
+2026-04-24 02:33:04 | INFO     | rag_system | AGENT | Enabled tools from agent_settings.json: ['retrieve_textbook', 'define_term', 'search_wikipedia', 'generate_quiz', 'compare_concepts']
+2026-04-24 02:34:06 | INFO     | rag_system | AGENT | Registered tools from function_calls.json: {'compare_concepts', 'retrieve_textbook', 'generate_quiz', 'search_wikipedia', 'define_term'}
+2026-04-24 02:34:06 | INFO     | rag_system | AGENT | Enabled tools from agent_settings.json: ['retrieve_textbook', 'define_term', 'search_wikipedia', 'generate_quiz', 'compare_concepts']
+2026-04-24 02:43:02 | INFO     | rag_system | AGENT | Registered tools from function_calls.json: {'search_wikipedia', 'compare_concepts', 'generate_quiz', 'retrieve_textbook', 'define_term'}
+2026-04-24 02:43:02 | INFO     | rag_system | AGENT | Enabled tools from agent_settings.json: ['retrieve_textbook', 'define_term', 'search_wikipedia', 'generate_quiz', 'compare_concepts']
+2026-04-24 02:43:54 | INFO     | rag_system | AGENT | Registered tools from function_calls.json: {'search_wikipedia', 'compare_concepts', 'define_term', 'retrieve_textbook', 'generate_quiz'}
+2026-04-24 02:43:54 | INFO     | rag_system | AGENT | Enabled tools from agent_settings.json: ['retrieve_textbook', 'define_term', 'search_wikipedia', 'generate_quiz', 'compare_concepts']
+2026-04-24 02:43:55 | INFO     | rag_system | AGENT | Registered tools from function_calls.json: {'define_term', 'retrieve_textbook', 'search_wikipedia', 'compare_concepts', 'generate_quiz'}
+2026-04-24 02:43:55 | INFO     | rag_system | AGENT | Enabled tools from agent_settings.json: ['retrieve_textbook', 'define_term', 'search_wikipedia', 'generate_quiz', 'compare_concepts']
+2026-04-24 02:44:56 | INFO     | rag_system | AGENT | Registered tools from function_calls.json: {'compare_concepts', 'generate_quiz', 'retrieve_textbook', 'define_term', 'search_wikipedia'}
+2026-04-24 02:44:56 | INFO     | rag_system | AGENT | Enabled tools from agent_settings.json: ['retrieve_textbook', 'define_term', 'search_wikipedia', 'generate_quiz', 'compare_concepts']
+2026-04-24 02:48:01 | INFO     | rag_system | AGENT | Registered tools from function_calls.json: {'retrieve_textbook', 'generate_quiz', 'define_term', 'compare_concepts', 'search_wikipedia'}
+2026-04-24 02:48:01 | INFO     | rag_system | AGENT | Enabled tools from agent_settings.json: ['retrieve_textbook', 'define_term', 'search_wikipedia', 'generate_quiz', 'compare_concepts']
+2026-04-24 02:48:01 | INFO     | rag_system | STARTUP | RAG Assistant v2.0.0 starting
+2026-04-24 02:48:01 | INFO     | rag_system | STARTUP | Setting up PostgreSQL tables
+2026-04-24 15:09:10 | INFO     | rag_system | AGENT | Registered tools from function_calls.json: {'retrieve_textbook', 'define_term', 'generate_quiz', 'compare_concepts', 'search_wikipedia'}
+2026-04-24 15:09:10 | INFO     | rag_system | AGENT | Enabled tools from agent_settings.json: ['retrieve_textbook', 'define_term', 'search_wikipedia', 'generate_quiz', 'compare_concepts']
+2026-04-24 15:09:10 | INFO     | rag_system | STARTUP | RAG Assistant v2.0.0 starting
+2026-04-24 15:09:10 | INFO     | rag_system | STARTUP | Setting up PostgreSQL tables
+2026-04-24 15:09:10 | INFO     | rag_system | DB | Connection pool created (min=1, max=10)
+2026-04-24 15:09:11 | INFO     | rag_system | DB | Tables verified / created
+2026-04-24 15:09:11 | INFO     | rag_system | STARTUP | Initialising encryption
+2026-04-24 15:09:11 | WARNING  | rag_system | ENCRYPTION | No ENCRYPTION_KEY env var found. Generated an ephemeral key — encrypted data will be UNRECOVERABLE after server restart. For production, add to .env: ENCRYPTION_KEY=o9IRZxg1W-dQGJUwqw-4kNbctBK6sIySJOXOXP2o_WQ=
+2026-04-24 15:09:11 | INFO     | rag_system | STARTUP | Loading embedding model: all-MiniLM-L6-v2
+2026-04-24 15:16:48 | INFO     | rag_system | STARTUP | Embedding model loaded
+2026-04-24 15:16:48 | INFO     | rag_system | STARTUP | Loading vector store from: ./OS_base
+2026-04-24 15:16:48 | WARNING  | rag_system | INGEST | No vector store found at ./OS_base
+2026-04-24 15:16:48 | WARNING  | rag_system | STARTUP | No vector store found — upload a PDF before asking questions
+2026-04-24 15:16:48 | INFO     | rag_system | STARTUP | Groq client initialised
+2026-04-24 15:16:48 | INFO     | rag_system | STARTUP | Upload directory ready: ./uploads
+2026-04-24 15:16:48 | INFO     | rag_system | STARTUP | Ready — accepting requests
+2026-04-24 15:25:00 | INFO     | rag_system | UPLOAD | Receiving: Abraham-Silberschatz-Operating-System-Concepts-10th-2018.pdf
+2026-04-24 15:25:01 | INFO     | rag_system | UPLOAD | Saved Abraham-Silberschatz-Operating-System-Concepts-10th-2018.pdf (30404 KB)
+2026-04-24 15:25:01 | INFO     | rag_system | INGEST | Loading PDF: Abraham-Silberschatz-Operating-System-Concepts-10th-2018.pdf (30404 KB)
+2026-04-24 15:31:38 | INFO     | rag_system | INGEST | 4150 chunks created from Abraham-Silberschatz-Operating-System-Concepts-10th-2018.pdf
+2026-04-24 15:31:38 | INFO     | rag_system | INGEST | Embedding and storing in ./OS_base ...
+2026-04-24 15:35:46 | INFO     | rag_system | INGEST | Complete — 4150 chunks stored in ./OS_base
+2026-04-24 15:35:46 | INFO     | rag_system | DB | Ingestion logged | file=Abraham-Silberschatz-Operating-System-Concepts-10th-2018.pdf | chunks=4150
+2026-04-24 15:35:46 | INFO     | rag_system | UPLOAD | Ingestion complete | chunks=4150
+2026-04-24 15:41:32 | INFO     | rag_system | EVENT: ask | session=default | question=What is operating system
+2026-04-24 15:41:32 | INFO     | rag_system | EVENT: bot_start | session=default | question=What is operating system
+2026-04-24 15:41:32 | INFO     | rag_system | AGENT | Routing: 'What is operating system'
+2026-04-24 15:41:32 | INFO     | rag_system | AGENT | Intent detected: define
+2026-04-24 15:41:32 | INFO     | rag_system | AGENT | Executing tool: define_term
+2026-04-24 15:41:32 | INFO     | rag_system | AGENT | Tool complete | tool=define_term | context_len=989
+2026-04-24 15:41:32 | INFO     | rag_system | EVENT: agent_decision | input_preview=What is operating system | intent=define | tool=define_term | context_len=989
+2026-04-24 15:41:32 | INFO     | rag_system | QUERY | intent=define | tool=define_term | context_len=989
+2026-04-24 15:41:32 | INFO     | rag_system | QUERY | Calling Groq model=llama-3.1-8b-instant
+2026-04-24 15:41:34 | INFO     | rag_system | QUERY | LLM responded | tokens=265
+2026-04-24 15:41:34 | INFO     | rag_system | EVENT: bot_complete | session=default | intent=define
+2026-04-24 15:53:38 | INFO     | rag_system | EVENT: ask | session=default | question=What is address binding and how does it work according to ch
+2026-04-24 15:53:38 | INFO     | rag_system | EVENT: bot_start | session=default | question=What is address binding and how does it work according to ch
+2026-04-24 15:53:38 | INFO     | rag_system | AGENT | Routing: 'What is address binding and how does it work according to ch'
+2026-04-24 15:53:38 | INFO     | rag_system | AGENT | Intent detected: define
+2026-04-24 15:53:38 | INFO     | rag_system | AGENT | Executing tool: define_term
+2026-04-24 15:53:38 | INFO     | rag_system | AGENT | Tool complete | tool=define_term | context_len=1013
+2026-04-24 15:53:38 | INFO     | rag_system | EVENT: agent_decision | input_preview=What is address binding and how does it  | intent=define | tool=define_term | context_len=1013
+2026-04-24 15:53:38 | INFO     | rag_system | QUERY | intent=define | tool=define_term | context_len=1013
+2026-04-24 15:53:38 | INFO     | rag_system | QUERY | Calling Groq model=llama-3.1-8b-instant
+2026-04-24 15:53:41 | INFO     | rag_system | QUERY | LLM responded | tokens=283
+2026-04-24 15:53:41 | INFO     | rag_system | EVENT: bot_complete | session=default | intent=define
+2026-04-24 15:55:32 | INFO     | rag_system | EVENT: ask | session=default | question=how does it work
+2026-04-24 15:55:32 | INFO     | rag_system | EVENT: bot_start | session=default | question=how does it work
+2026-04-24 15:55:32 | INFO     | rag_system | AGENT | Routing: 'how does it work'
+2026-04-24 15:55:32 | INFO     | rag_system | AGENT | Intent detected: retrieve
+2026-04-24 15:55:32 | INFO     | rag_system | AGENT | Executing tool: retrieve_textbook
+2026-04-24 15:55:32 | INFO     | rag_system | AGENT | Tool complete | tool=retrieve_textbook | context_len=2202
+2026-04-24 15:55:32 | INFO     | rag_system | EVENT: agent_decision | input_preview=how does it work | intent=retrieve | tool=retrieve_textbook | context_len=2202
+2026-04-24 15:55:32 | INFO     | rag_system | QUERY | intent=retrieve | tool=retrieve_textbook | context_len=2202
+2026-04-24 15:55:32 | INFO     | rag_system | QUERY | Calling Groq model=llama-3.1-8b-instant
+2026-04-24 15:55:33 | INFO     | rag_system | QUERY | LLM responded | tokens=356
+2026-04-24 15:55:33 | INFO     | rag_system | EVENT: bot_complete | session=default | intent=retrieve
+2026-04-24 16:01:14 | INFO     | rag_system | SHUTDOWN | Closing database connection pool
+2026-04-24 16:01:14 | INFO     | rag_system | DB | Connection pool closed
+2026-04-24 16:01:14 | INFO     | rag_system | SHUTDOWN | Clean shutdown complete
+2026-04-24 16:29:34 | INFO     | rag_system | AGENT | Registered tools from function_calls.json: {'generate_quiz', 'retrieve_textbook', 'define_term', 'search_wikipedia', 'compare_concepts'}
+2026-04-24 16:29:34 | INFO     | rag_system | AGENT | Enabled tools from agent_settings.json: ['retrieve_textbook', 'define_term', 'search_wikipedia', 'generate_quiz', 'compare_concepts']
+2026-04-24 16:29:34 | INFO     | rag_system | STARTUP | RAG Assistant v2.0.0 starting
+2026-04-24 16:29:34 | INFO     | rag_system | STARTUP | Setting up PostgreSQL tables
+2026-04-24 16:29:34 | INFO     | rag_system | DB | Connection pool created (min=1, max=10)
+2026-04-24 16:29:34 | INFO     | rag_system | DB | Tables verified / created
+2026-04-24 16:29:34 | INFO     | rag_system | STARTUP | Initialising encryption
+2026-04-24 16:29:34 | INFO     | rag_system | ENCRYPTION | Key loaded from environment
+2026-04-24 16:29:34 | INFO     | rag_system | STARTUP | Loading embedding model: all-MiniLM-L6-v2
+2026-04-24 16:32:20 | INFO     | rag_system | STARTUP | Embedding model loaded
+2026-04-24 16:32:20 | INFO     | rag_system | STARTUP | Loading vector store from: ./OS_base
+2026-04-24 16:32:20 | INFO     | rag_system | INGEST | Loading existing vector store from ./OS_base
+2026-04-24 16:32:25 | INFO     | rag_system | INGEST | Vector store loaded successfully
+2026-04-24 16:32:25 | INFO     | rag_system | STARTUP | Vector store loaded — system ready to answer questions
+2026-04-24 16:32:25 | INFO     | rag_system | STARTUP | Groq client initialised
+2026-04-24 16:32:25 | INFO     | rag_system | STARTUP | Upload directory ready: ./uploads
+2026-04-24 16:32:25 | INFO     | rag_system | STARTUP | Ready — accepting requests
+2026-04-24 16:42:50 | INFO     | rag_system | EVENT: ask | session=default | question=what is deadlock
+2026-04-24 16:42:50 | INFO     | rag_system | EVENT: bot_start | session=default | question=what is deadlock
+2026-04-24 16:42:50 | INFO     | rag_system | AGENT | Routing: 'what is deadlock'
+2026-04-24 16:42:50 | INFO     | rag_system | AGENT | Intent detected: define
+2026-04-24 16:42:50 | INFO     | rag_system | AGENT | Executing tool: define_term
+2026-04-24 16:42:51 | INFO     | rag_system | AGENT | Tool complete | tool=define_term | context_len=405
+2026-04-24 16:42:51 | INFO     | rag_system | EVENT: agent_decision | input_preview=what is deadlock | intent=define | tool=define_term | context_len=405
+2026-04-24 16:42:51 | INFO     | rag_system | QUERY | intent=define | tool=define_term | context_len=405
+2026-04-24 16:42:51 | INFO     | rag_system | QUERY | Calling Groq model=llama-3.1-8b-instant
+2026-04-24 16:42:53 | INFO     | rag_system | QUERY | LLM responded | tokens=263
+2026-04-24 16:42:53 | INFO     | rag_system | EVENT: bot_complete | session=default | intent=define
+2026-04-24 16:47:51 | INFO     | rag_system | EVENT: ask | session=default | question=what is agentic reasoning
+2026-04-24 16:47:51 | INFO     | rag_system | EVENT: bot_start | session=default | question=what is agentic reasoning
+2026-04-24 16:47:51 | INFO     | rag_system | AGENT | Routing: 'what is agentic reasoning'
+2026-04-24 16:47:51 | INFO     | rag_system | AGENT | Intent detected: define
+2026-04-24 16:47:51 | INFO     | rag_system | AGENT | Executing tool: define_term
+2026-04-24 16:47:51 | INFO     | rag_system | AGENT | Tool complete | tool=define_term | context_len=449
+2026-04-24 16:47:51 | INFO     | rag_system | EVENT: agent_decision | input_preview=what is agentic reasoning | intent=define | tool=define_term | context_len=449
+2026-04-24 16:47:51 | INFO     | rag_system | QUERY | intent=define | tool=define_term | context_len=449
+2026-04-24 16:47:51 | INFO     | rag_system | QUERY | Calling Groq model=llama-3.1-8b-instant
+2026-04-24 16:47:53 | INFO     | rag_system | QUERY | LLM responded | tokens=394
+2026-04-24 16:47:53 | INFO     | rag_system | EVENT: bot_complete | session=default | intent=define
+2026-04-24 22:23:13 | INFO     | rag_system | SHUTDOWN | Closing database connection pool
+2026-04-24 22:23:13 | INFO     | rag_system | DB | Connection pool closed
+2026-04-24 22:23:13 | INFO     | rag_system | SHUTDOWN | Clean shutdown complete
+2026-04-24 22:24:44 | INFO     | rag_system | AGENT | Registered tools from function_calls.json: {'retrieve_textbook', 'search_wikipedia', 'define_term', 'generate_quiz', 'compare_concepts'}
+2026-04-24 22:24:44 | INFO     | rag_system | AGENT | Enabled tools from agent_settings.json: ['retrieve_textbook', 'define_term', 'search_wikipedia', 'generate_quiz', 'compare_concepts']
+2026-04-24 22:24:44 | INFO     | rag_system | STARTUP | RAG Assistant v2.0.0 starting
+2026-04-24 22:24:44 | INFO     | rag_system | STARTUP | Setting up PostgreSQL tables
+2026-04-24 22:24:44 | INFO     | rag_system | DB | Connection pool created (min=1, max=10)
+2026-04-24 22:24:44 | INFO     | rag_system | DB | Tables verified / created
+2026-04-24 22:24:44 | INFO     | rag_system | STARTUP | Initialising encryption
+2026-04-24 22:24:44 | INFO     | rag_system | ENCRYPTION | Key loaded from environment
+2026-04-24 22:24:44 | INFO     | rag_system | STARTUP | Loading embedding model: all-MiniLM-L6-v2
+2026-04-24 22:24:53 | INFO     | rag_system | STARTUP | Embedding model loaded
+2026-04-24 22:24:53 | INFO     | rag_system | STARTUP | Loading vector store from: ./OS_base
+2026-04-24 22:24:53 | INFO     | rag_system | INGEST | Loading existing vector store from ./OS_base
+2026-04-24 22:24:57 | INFO     | rag_system | INGEST | Vector store loaded successfully
+2026-04-24 22:24:57 | INFO     | rag_system | STARTUP | Vector store loaded — system ready to answer questions
+2026-04-24 22:24:57 | INFO     | rag_system | STARTUP | Groq client initialised
+2026-04-24 22:24:57 | INFO     | rag_system | STARTUP | Upload directory ready: ./uploads
+2026-04-24 22:24:57 | INFO     | rag_system | STARTUP | Ready — accepting requests
+2026-04-24 22:24:57 | INFO     | rag_system | SHUTDOWN | Closing database connection pool
+2026-04-24 22:24:57 | INFO     | rag_system | DB | Connection pool closed
+2026-04-24 22:24:57 | INFO     | rag_system | SHUTDOWN | Clean shutdown complete
+2026-04-24 22:29:18 | INFO     | rag_system | AGENT | Registered tools from function_calls.json: {'generate_quiz', 'compare_concepts', 'retrieve_textbook', 'search_wikipedia', 'define_term'}
+2026-04-24 22:29:18 | INFO     | rag_system | AGENT | Enabled tools from agent_settings.json: ['retrieve_textbook', 'define_term', 'search_wikipedia', 'generate_quiz', 'compare_concepts']
+2026-04-24 22:29:19 | INFO     | rag_system | STARTUP | RAG Assistant v2.0.0
+2026-04-24 22:29:19 | INFO     | rag_system | STARTUP | Setting up database
+2026-04-24 22:29:19 | INFO     | rag_system | DB | Connection pool created (min=1, max=10)
+2026-04-24 22:29:19 | INFO     | rag_system | DB | Tables verified / created
+2026-04-24 22:29:19 | INFO     | rag_system | STARTUP | Initialising encryption
+2026-04-24 22:29:19 | INFO     | rag_system | ENCRYPTION | Key loaded from environment
+2026-04-24 22:29:19 | INFO     | rag_system | STARTUP | Loading embedding model: all-MiniLM-L6-v2
+2026-04-24 22:29:27 | INFO     | rag_system | STARTUP | Embeddings ready
+2026-04-24 22:29:27 | INFO     | rag_system | STARTUP | Loading vector store
+2026-04-24 22:29:27 | INFO     | rag_system | VECTOR_FACTORY | Chroma | Loading from ./OS_base
+2026-04-24 22:29:28 | INFO     | rag_system | INGEST | Existing vector store loaded
+2026-04-24 22:29:28 | INFO     | rag_system | STARTUP | Vector store loaded — ready
+2026-04-24 22:29:28 | INFO     | rag_system | STARTUP | Groq client ready
+2026-04-24 22:29:28 | INFO     | rag_system | STARTUP | Ready — uploads dir: ./uploads
+2026-04-24 22:29:43 | INFO     | rag_system | SHUTDOWN | Closing DB pool
+2026-04-24 22:29:43 | INFO     | rag_system | DB | Connection pool closed
+2026-04-24 22:29:43 | INFO     | rag_system | SHUTDOWN | Done
+2026-04-24 22:30:19 | INFO     | rag_system | AGENT | Registered tools from function_calls.json: {'generate_quiz', 'compare_concepts', 'define_term', 'retrieve_textbook', 'search_wikipedia'}
+2026-04-24 22:30:19 | INFO     | rag_system | AGENT | Enabled tools from agent_settings.json: ['retrieve_textbook', 'define_term', 'search_wikipedia', 'generate_quiz', 'compare_concepts']
+2026-04-24 22:30:19 | INFO     | rag_system | STARTUP | RAG Assistant v2.0.0
+2026-04-24 22:30:19 | INFO     | rag_system | STARTUP | Setting up database
+2026-04-24 22:30:19 | INFO     | rag_system | DB | Connection pool created (min=1, max=10)
+2026-04-24 22:30:19 | INFO     | rag_system | DB | Tables verified / created
+2026-04-24 22:30:19 | INFO     | rag_system | STARTUP | Initialising encryption
+2026-04-24 22:30:19 | INFO     | rag_system | ENCRYPTION | Key loaded from environment
+2026-04-24 22:30:19 | INFO     | rag_system | STARTUP | Loading embedding model: all-MiniLM-L6-v2
+2026-04-24 22:30:30 | INFO     | rag_system | STARTUP | Embeddings ready
+2026-04-24 22:30:30 | INFO     | rag_system | STARTUP | Loading vector store
+2026-04-24 22:30:30 | INFO     | rag_system | VECTOR_FACTORY | Chroma | Loading from ./OS_base
+2026-04-24 22:30:30 | INFO     | rag_system | INGEST | Existing vector store loaded
+2026-04-24 22:30:30 | INFO     | rag_system | STARTUP | Vector store loaded — ready
+2026-04-24 22:30:30 | INFO     | rag_system | STARTUP | Groq client ready
+2026-04-24 22:30:30 | INFO     | rag_system | STARTUP | Ready — uploads dir: ./uploads
+2026-04-24 22:44:42 | INFO     | rag_system | SHUTDOWN | Closing DB pool
+2026-04-24 22:44:42 | INFO     | rag_system | DB | Connection pool closed
+2026-04-24 22:44:42 | INFO     | rag_system | SHUTDOWN | Done
+2026-04-24 22:45:01 | INFO     | rag_system | AGENT | Registered tools from function_calls.json: {'compare_concepts', 'define_term', 'retrieve_textbook', 'generate_quiz', 'search_wikipedia'}
+2026-04-24 22:45:01 | INFO     | rag_system | AGENT | Enabled tools from agent_settings.json: ['retrieve_textbook', 'define_term', 'search_wikipedia', 'generate_quiz', 'compare_concepts']
+2026-04-24 22:45:01 | INFO     | rag_system | STARTUP | RAG Assistant v2.0.0
+2026-04-24 22:45:01 | INFO     | rag_system | STARTUP | Setting up database
+2026-04-24 22:45:01 | INFO     | rag_system | DB | Connection pool created (min=1, max=10)
+2026-04-24 22:45:01 | INFO     | rag_system | DB | Tables verified / created
+2026-04-24 22:45:01 | INFO     | rag_system | STARTUP | Initialising encryption
+2026-04-24 22:45:01 | INFO     | rag_system | ENCRYPTION | Key loaded from environment
+2026-04-24 22:45:01 | INFO     | rag_system | STARTUP | Loading embedding model: all-MiniLM-L6-v2
+2026-04-24 22:45:09 | INFO     | rag_system | STARTUP | Embeddings ready
+2026-04-24 22:45:09 | INFO     | rag_system | STARTUP | Loading vector store
+2026-04-24 22:45:09 | INFO     | rag_system | VECTOR_FACTORY | Chroma | Loading from ./OS_base
+2026-04-24 22:45:11 | INFO     | rag_system | INGEST | Existing vector store loaded
+2026-04-24 22:45:11 | INFO     | rag_system | STARTUP | Vector store loaded — ready
+2026-04-24 22:45:11 | INFO     | rag_system | STARTUP | Groq client ready
+2026-04-24 22:45:11 | INFO     | rag_system | STARTUP | Ready — uploads dir: ./uploads
+2026-04-24 22:45:35 | INFO     | rag_system | EVENT: ask | session=default | q=what is os
+2026-04-24 22:45:35 | INFO     | rag_system | EVENT: bot_start | session=default | question=what is os
+2026-04-24 22:45:35 | INFO     | rag_system | AGENT | Routing: 'what is os'
+2026-04-24 22:45:35 | INFO     | rag_system | AGENT | Intent detected: define
+2026-04-24 22:45:35 | INFO     | rag_system | AGENT | Executing tool: define_term
+2026-04-24 22:45:35 | INFO     | rag_system | AGENT | Tool complete | tool=define_term | context_len=880
+2026-04-24 22:45:35 | INFO     | rag_system | EVENT: agent_decision | input_preview=what is os | intent=define | tool=define_term | context_len=880
+2026-04-24 22:45:35 | INFO     | rag_system | QUERY | intent=define | tool=define_term | context_len=880
+2026-04-24 22:45:36 | INFO     | rag_system | QUERY | Calling Groq model=llama-3.1-8b-instant
+2026-04-24 22:45:37 | INFO     | rag_system | QUERY | LLM responded | tokens=259
+2026-04-24 22:45:37 | INFO     | rag_system | EVENT: bot_complete | session=default | intent=define
+2026-04-24 22:50:33 | INFO     | rag_system | EVENT: ask | session=user1 | q=what is chapter 3 about
+2026-04-24 22:50:33 | INFO     | rag_system | EVENT: bot_start | session=user1 | question=what is chapter 3 about
+2026-04-24 22:50:33 | INFO     | rag_system | AGENT | Routing: 'what is chapter 3 about'
+2026-04-24 22:50:33 | INFO     | rag_system | AGENT | Intent detected: define
+2026-04-24 22:50:33 | INFO     | rag_system | AGENT | Executing tool: define_term
+2026-04-24 22:50:33 | INFO     | rag_system | AGENT | Tool complete | tool=define_term | context_len=912
+2026-04-24 22:50:33 | INFO     | rag_system | EVENT: agent_decision | input_preview=what is chapter 3 about | intent=define | tool=define_term | context_len=912
+2026-04-24 22:50:33 | INFO     | rag_system | QUERY | intent=define | tool=define_term | context_len=912
+2026-04-24 22:50:33 | INFO     | rag_system | QUERY | Calling Groq model=llama-3.1-8b-instant
+2026-04-24 22:50:35 | INFO     | rag_system | QUERY | LLM responded | tokens=168
+2026-04-24 22:50:35 | INFO     | rag_system | EVENT: bot_complete | session=user1 | intent=define
+2026-04-25 02:20:59 | INFO     | rag_system | SHUTDOWN | Closing DB pool
+2026-04-25 02:20:59 | INFO     | rag_system | DB | Connection pool closed
+2026-04-25 02:20:59 | INFO     | rag_system | SHUTDOWN | Done

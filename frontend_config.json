@@ -1,0 +1,40 @@
+{
+  "app": {
+    "title": "SentiaVault AI",
+    "subtitle": "Secure Agentic Document Intelligence",
+    "logo_emoji": "🛡️",
+    "accent_color": "#00D4AA",
+    "theme": "dark"
+  },
+  "backend": {
+    "base_url": "http://127.0.0.1:8000",
+    "endpoints": {
+      "ask":           "/ask",
+      "upload":        "/upload",
+      "ingest_status": "/ingest/status",
+      "books":         "/books",
+      "health":        "/health"
+    },
+    "poll_interval_ms": 2000,
+    "request_timeout":  30
+  },
+  "chat": {
+    "default_session_id": "default",
+    "placeholder":        "Ask about your documents...",
+    "welcome_message":    "Hello! Upload a document and ask me anything about it. I'll retrieve the most relevant information and explain it clearly.",
+    "output_format":      "markdown"
+  },
+  "features": {
+    "show_agent_logic":   true,
+    "show_health_check":  true,
+    "show_books_list":    true,
+    "show_upload":        true,
+    "show_session_input": true
+  },
+  "upload": {
+    "accepted_types": ["pdf"],
+    "label":          "Upload Technical Document",
+    "button_label":   "Ingest Document",
+    "encrypting_msg": "Encrypting and Indexing..."
+  }
+}

@@ -8,4 +8,8 @@ pypdf
 groq
 psycopg2-binary
 python-dotenv
-wikipedia
+Wikipedia
+watchdog==4.0.0
+pathlib==1.0.1
+cryptography==42.0.5
+python-dotenv==1.0.1
