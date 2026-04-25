@@ -517,3 +517,13 @@ context
 2026-04-25 05:41:17 | INFO     | rag_system | STARTUP | Initialising encryption
 2026-04-25 05:41:17 | INFO     | rag_system | ENCRYPTION | Key loaded from environment
 2026-04-25 05:41:17 | INFO     | rag_system | STARTUP | Loading embedding model: all-MiniLM-L6-v2
+2026-04-25 05:41:43 | INFO     | rag_system | STARTUP | Embeddings ready
+2026-04-25 05:41:43 | INFO     | rag_system | STARTUP | Loading vector store
+2026-04-25 05:41:43 | INFO     | rag_system | VECTOR_FACTORY | Chroma | Loading from ./OS_base
+2026-04-25 05:41:45 | INFO     | rag_system | INGEST | Existing vector store loaded
+2026-04-25 05:41:45 | INFO     | rag_system | STARTUP | Vector store loaded — ready
+2026-04-25 05:41:45 | INFO     | rag_system | STARTUP | Groq client ready
+2026-04-25 05:41:45 | INFO     | rag_system | STARTUP | Ready — uploads dir: ./uploads
+2026-04-25 10:22:02 | INFO     | rag_system | SHUTDOWN | Closing DB pool
+2026-04-25 10:22:02 | INFO     | rag_system | DB | Pool closed
+2026-04-25 10:22:02 | INFO     | rag_system | SHUTDOWN | Done

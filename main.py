@@ -76,11 +76,17 @@ def _run_ingest(
     job_id:     str,
     pdf_path:   str,
     filename:   str,
-    app_state,               # FastAPI app.state — we update vector_db here
+    app_state,             # This should be FastAPI's app.state object
 ):
     """
     The actual ingestion work. Runs in a background thread via FastAPI's
     BackgroundTasks — the HTTP response is already sent before this starts.
+
+    Args:
+        job_id: Unique identifier for the ingestion job.
+        pdf_path: Path to the uploaded PDF file.
+        filename: Name of the uploaded file.
+        app_state: FastAPI app.state object (i.e., request.app.state) — used to update vector_db.
 
     Why not async?
         Langchain's PDF loader and ChromaDB writes are synchronous blocking
