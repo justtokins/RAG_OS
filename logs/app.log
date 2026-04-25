@@ -505,3 +505,15 @@ context
 2026-04-25 05:17:03 | INFO     | rag_system | BOT | Calling Groq llama-3.1-8b-instant
 2026-04-25 05:17:06 | INFO     | rag_system | BOT | LLM responded | 835 words
 2026-04-25 05:17:06 | INFO     | rag_system | EVENT: bot_complete | session=default | intent=retrieve | tool=retrieve_textbook
+2026-04-25 05:41:12 | INFO     | rag_system | SHUTDOWN | Closing DB pool
+2026-04-25 05:41:12 | INFO     | rag_system | DB | Pool closed
+2026-04-25 05:41:12 | INFO     | rag_system | SHUTDOWN | Done
+2026-04-25 05:41:17 | INFO     | rag_system | AGENT | Registered tools from function_calls.json: {'define_term', 'retrieve_textbook', 'search_wikipedia', 'compare_concepts', 'generate_quiz'}
+2026-04-25 05:41:17 | INFO     | rag_system | AGENT | Enabled tools from agent_settings.json: ['retrieve_textbook', 'define_term', 'search_wikipedia', 'generate_quiz', 'compare_concepts']
+2026-04-25 05:41:17 | INFO     | rag_system | STARTUP | RAG Assistant v3.0.0
+2026-04-25 05:41:17 | INFO     | rag_system | STARTUP | Setting up database
+2026-04-25 05:41:17 | INFO     | rag_system | DB | Connection pool created (min=1 max=10)
+2026-04-25 05:41:17 | INFO     | rag_system | DB | Tables verified
+2026-04-25 05:41:17 | INFO     | rag_system | STARTUP | Initialising encryption
+2026-04-25 05:41:17 | INFO     | rag_system | ENCRYPTION | Key loaded from environment
+2026-04-25 05:41:17 | INFO     | rag_system | STARTUP | Loading embedding model: all-MiniLM-L6-v2
