@@ -16,7 +16,8 @@ logger = get_logger()
 # ── Load triggers and settings from JSON ──────────────────────────────────────
 TRIGGERS     = agent_settings["intent_triggers"]
 TOOLS_ENABLED = agent_settings["tools_enabled"]
-TOP_K        = general_settings["retrieval"]["top_k"]
+TOP_K        = general_settings["retrieval"]["top_k"] 
+
 
 # Build the set of tool names that exist in function_calls.json
 # This is the authoritative registry — only these tools can be used
@@ -49,8 +50,8 @@ INTENT_TO_TOOL: dict[str, str] = {
 # interface and the specific signatures of each tool function.
 def _build_tool_registry(vector_db: Chroma, user_input: str) -> dict:
     return {
-        "retrieve_textbook": lambda: tool_retrieve_textbook(
-            vector_db, user_input, k=TOP_K
+        "retrieve_textbook": lambda: vector_db.max_marginal_relevance_search(
+            user_input, k=TOP_K, fetch_k=TOP_K*2
         ),
         "define_term": lambda: _execute_define(vector_db, user_input),
         "search_wikipedia": lambda: _execute_wikipedia(vector_db, user_input),
@@ -186,6 +187,45 @@ def route(user_input: str, vector_db: Chroma) -> AgentDecision:
             f"— falling back to retrieve_textbook"
         )
         tool_name = "retrieve_textbook"
+
+
+    # Step 5: Execute tool
+    logger.info(f"AGENT | Executing tool: {tool_name}")
+    tool_registry = _build_tool_registry(vector_db, user_input)
+
+    try:
+        raw_result = tool_registry[tool_name]()
+        
+        # 1. Handle the List case (usually from similarity_search or MMR)
+        if isinstance(raw_result, list):
+            # We filter and join only if the items are actually Documents
+            # This "if d and hasattr..." check satisfies Pylance's type safety
+            context = "\n\n".join([
+                d.page_content for d in raw_result 
+                if hasattr(d, "page_content")
+            ])
+        else:
+            # 2. Handle the String case (from _execute_define or _execute_wikipedia)
+            context = str(raw_result)
+
+        logger.info(f"AGENT | Tool complete | tool={tool_name} | context_len={len(context)}")
+        
+    except Exception as e:
+        logger.error(f"AGENT | Tool '{tool_name}' failed: {e}")
+        # Fallback must also be normalized to a string
+        fallback_docs = tool_retrieve_textbook(vector_db, user_input, k=TOP_K)
+        context = "\n\n".join([d.page_content for d in fallback_docs])#type: ignore
+        tool_name = "retrieve_textbook"
+    # Step 6: Log and Return
+    logger.event(
+        "agent_decision",
+        input_preview=user_input[:40],
+        intent=intent,
+        tool=tool_name,
+        context_len=len(context),
+    )
+
+    return AgentDecision(intent=intent, tool=tool_name, context=context)
 
     # Step 5: Execute tool
     logger.info(f"AGENT | Executing tool: {tool_name}")

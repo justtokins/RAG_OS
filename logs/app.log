@@ -215,3 +215,293 @@
 2026-04-25 02:20:59 | INFO     | rag_system | SHUTDOWN | Closing DB pool
 2026-04-25 02:20:59 | INFO     | rag_system | DB | Connection pool closed
 2026-04-25 02:20:59 | INFO     | rag_system | SHUTDOWN | Done
+2026-04-25 03:46:49 | INFO     | rag_system | AGENT | Registered tools from function_calls.json: {'retrieve_textbook', 'compare_concepts', 'generate_quiz', 'search_wikipedia', 'define_term'}
+2026-04-25 03:46:49 | INFO     | rag_system | AGENT | Enabled tools from agent_settings.json: ['retrieve_textbook', 'define_term', 'search_wikipedia', 'generate_quiz', 'compare_concepts']
+2026-04-25 03:46:49 | INFO     | rag_system | STARTUP | RAG Assistant v3.0.0
+2026-04-25 03:46:49 | INFO     | rag_system | STARTUP | Setting up database
+2026-04-25 03:46:49 | INFO     | rag_system | DB | Connection pool created (min=1 max=10)
+2026-04-25 03:46:49 | INFO     | rag_system | DB | Tables verified
+2026-04-25 03:46:49 | INFO     | rag_system | STARTUP | Initialising encryption
+2026-04-25 03:46:49 | INFO     | rag_system | ENCRYPTION | Key loaded from environment
+2026-04-25 03:46:49 | INFO     | rag_system | STARTUP | Loading embedding model: all-MiniLM-L6-v2
+2026-04-25 03:47:34 | INFO     | rag_system | STARTUP | Embeddings ready
+2026-04-25 03:47:34 | INFO     | rag_system | STARTUP | Loading vector store
+2026-04-25 03:47:34 | INFO     | rag_system | VECTOR_FACTORY | Chroma | Loading from ./OS_base
+2026-04-25 03:47:38 | INFO     | rag_system | INGEST | Existing vector store loaded
+2026-04-25 03:47:38 | INFO     | rag_system | STARTUP | Vector store loaded — ready
+2026-04-25 03:47:38 | INFO     | rag_system | STARTUP | Groq client ready
+2026-04-25 03:47:38 | INFO     | rag_system | STARTUP | Ready — uploads dir: ./uploads
+2026-04-25 03:54:49 | INFO     | rag_system | SHUTDOWN | Closing DB pool
+2026-04-25 03:54:49 | INFO     | rag_system | DB | Pool closed
+2026-04-25 03:54:49 | INFO     | rag_system | SHUTDOWN | Done
+2026-04-25 03:54:53 | INFO     | rag_system | AGENT | Registered tools from function_calls.json: {'generate_quiz', 'define_term', 'compare_concepts', 'search_wikipedia', 'retrieve_textbook'}
+2026-04-25 03:54:53 | INFO     | rag_system | AGENT | Enabled tools from agent_settings.json: ['retrieve_textbook', 'define_term', 'search_wikipedia', 'generate_quiz', 'compare_concepts']
+2026-04-25 03:54:53 | INFO     | rag_system | STARTUP | RAG Assistant v3.0.0
+2026-04-25 03:54:53 | INFO     | rag_system | STARTUP | Setting up database
+2026-04-25 03:54:53 | INFO     | rag_system | DB | Connection pool created (min=1 max=10)
+2026-04-25 03:54:53 | INFO     | rag_system | DB | Tables verified
+2026-04-25 03:54:53 | INFO     | rag_system | STARTUP | Initialising encryption
+2026-04-25 03:54:53 | INFO     | rag_system | ENCRYPTION | Key loaded from environment
+2026-04-25 03:54:53 | INFO     | rag_system | STARTUP | Loading embedding model: all-MiniLM-L6-v2
+2026-04-25 03:55:16 | INFO     | rag_system | STARTUP | Embeddings ready
+2026-04-25 03:55:16 | INFO     | rag_system | STARTUP | Loading vector store
+2026-04-25 03:55:16 | INFO     | rag_system | VECTOR_FACTORY | Chroma | Loading from ./OS_base
+2026-04-25 03:55:17 | INFO     | rag_system | INGEST | Existing vector store loaded
+2026-04-25 03:55:17 | INFO     | rag_system | STARTUP | Vector store loaded — ready
+2026-04-25 03:55:17 | INFO     | rag_system | STARTUP | Groq client ready
+2026-04-25 03:55:17 | INFO     | rag_system | STARTUP | Ready — uploads dir: ./uploads
+2026-04-25 03:55:44 | INFO     | rag_system | UPLOAD | Saved Ethanol.pdf (2152 KB)
+2026-04-25 03:55:44 | INFO     | rag_system | UPLOAD | Queued job 3e600528-2d0d-49b5-ad75-0fc58202a905 for Ethanol.pdf
+2026-04-25 03:55:44 | INFO     | rag_system | BG_INGEST | job=3e600528-2d0d-49b5-ad75-0fc58202a905 | Starting: Ethanol.pdf
+2026-04-25 03:55:44 | INFO     | rag_system | INGEST | ── Starting: Ethanol.pdf (2152 KB) ──
+2026-04-25 03:55:44 | INFO     | rag_system | INGEST | [1/3] Loading PDF pages
+2026-04-25 03:55:45 | INFO     | rag_system | INGEST | 7 pages loaded in 1.4s
+2026-04-25 03:55:45 | INFO     | rag_system | INGEST | [1b/3] Parallel text splitting
+2026-04-25 03:55:45 | INFO     | rag_system | INGEST | Splitting 7 pages across 7 workers (11 cores)
+2026-04-25 03:56:07 | INFO     | rag_system | INGEST | Split → 11 chunks in 21.6s
+2026-04-25 03:56:07 | INFO     | rag_system | INGEST | [2/3] Batch embedding
+2026-04-25 03:56:07 | INFO     | rag_system | INGEST | Embedding 11 chunks | batch_size=64 | model=all-MiniLM-L6-v2
+2026-04-25 03:56:16 | INFO     | rag_system | INGEST | Embedding complete | shape=(11, 384)
+2026-04-25 03:56:16 | INFO     | rag_system | INGEST | Embed complete in 9.2s
+2026-04-25 03:56:16 | INFO     | rag_system | INGEST | [3/3] Batch vector store insertion
+2026-04-25 03:56:16 | INFO     | rag_system | INGEST | Inserting 11 embeddings into chroma (batch) ...
+2026-04-25 03:56:24 | INFO     | rag_system | INGEST | ChromaDB batch insert complete
+2026-04-25 03:56:24 | INFO     | rag_system | INGEST | Insert complete in 7.4s
+2026-04-25 03:56:24 | INFO     | rag_system | INGEST | ── DONE ── 11 chunks | 39.7s total | 0 chunks/sec
+2026-04-25 03:56:24 | INFO     | rag_system | DB | Ingestion logged | Ethanol.pdf | 11 chunks
+2026-04-25 03:56:24 | INFO     | rag_system | BG_INGEST | job=3e600528-2d0d-49b5-ad75-0fc58202a905 | Complete | file=Ethanol.pdf | chunks=11
+2026-04-25 03:56:36 | INFO     | rag_system | EVENT: ask | session=default | q=what is os
+2026-04-25 03:56:36 | INFO     | rag_system | EVENT: bot_start | session=default | q=what is os
+2026-04-25 03:56:36 | INFO     | rag_system | AGENT | Routing: 'what is os'
+2026-04-25 03:56:36 | INFO     | rag_system | AGENT | Intent detected: define
+2026-04-25 03:56:36 | INFO     | rag_system | AGENT | Executing tool: define_term
+2026-04-25 03:56:37 | INFO     | rag_system | AGENT | Tool complete | tool=define_term | context_len=880
+2026-04-25 03:56:37 | INFO     | rag_system | EVENT: agent_decision | input_preview=what is os | intent=define | tool=define_term | context_len=880
+2026-04-25 03:56:37 | INFO     | rag_system | BOT | intent=define tool=define_term history_turns=6 context_len=880
+2026-04-25 03:56:37 | INFO     | rag_system | BOT | Calling Groq llama-3.1-8b-instant
+2026-04-25 03:56:38 | INFO     | rag_system | BOT | LLM responded | 312 words
+2026-04-25 03:56:38 | INFO     | rag_system | EVENT: bot_complete | session=default | intent=define | tool=define_term
+2026-04-25 03:57:18 | INFO     | rag_system | EVENT: ask | session=default | q=what is the business logic of the ethanol business model
+2026-04-25 03:57:18 | INFO     | rag_system | EVENT: bot_start | session=default | q=what is the business logic of the ethanol business model
+2026-04-25 03:57:18 | INFO     | rag_system | AGENT | Routing: 'what is the business logic of the ethanol business model'
+2026-04-25 03:57:18 | INFO     | rag_system | AGENT | Intent detected: define
+2026-04-25 03:57:18 | INFO     | rag_system | AGENT | Executing tool: define_term
+2026-04-25 03:57:18 | INFO     | rag_system | AGENT | Tool complete | tool=define_term | context_len=635
+2026-04-25 03:57:18 | INFO     | rag_system | EVENT: agent_decision | input_preview=what is the business logic of the ethano | intent=define | tool=define_term | context_len=635
+2026-04-25 03:57:18 | INFO     | rag_system | BOT | intent=define tool=define_term history_turns=6 context_len=635
+2026-04-25 03:57:18 | INFO     | rag_system | BOT | Calling Groq llama-3.1-8b-instant
+2026-04-25 03:57:20 | INFO     | rag_system | BOT | LLM responded | 407 words
+2026-04-25 03:57:20 | INFO     | rag_system | EVENT: bot_complete | session=default | intent=define | tool=define_term
+2026-04-25 03:59:09 | INFO     | rag_system | EVENT: ask | session=default | q=what is the capital need to start the business
+2026-04-25 03:59:09 | INFO     | rag_system | EVENT: bot_start | session=default | q=what is the capital need to start the business
+2026-04-25 03:59:09 | INFO     | rag_system | AGENT | Routing: 'what is the capital need to start the business'
+2026-04-25 03:59:09 | INFO     | rag_system | AGENT | Intent detected: define
+2026-04-25 03:59:09 | INFO     | rag_system | AGENT | Executing tool: define_term
+2026-04-25 03:59:09 | INFO     | rag_system | AGENT | Tool complete | tool=define_term | context_len=446
+2026-04-25 03:59:09 | INFO     | rag_system | EVENT: agent_decision | input_preview=what is the capital need to start the bu | intent=define | tool=define_term | context_len=446
+2026-04-25 03:59:09 | INFO     | rag_system | BOT | intent=define tool=define_term history_turns=6 context_len=446
+2026-04-25 03:59:09 | INFO     | rag_system | BOT | Calling Groq llama-3.1-8b-instant
+2026-04-25 03:59:11 | INFO     | rag_system | BOT | LLM responded | 533 words
+2026-04-25 03:59:11 | INFO     | rag_system | EVENT: bot_complete | session=default | intent=define | tool=define_term
+2026-04-25 03:59:51 | INFO     | rag_system | EVENT: ask | session=default | q=how many books do you have
+2026-04-25 03:59:51 | INFO     | rag_system | EVENT: bot_start | session=default | q=how many books do you have
+2026-04-25 03:59:51 | INFO     | rag_system | AGENT | Routing: 'how many books do you have'
+2026-04-25 03:59:51 | INFO     | rag_system | AGENT | Intent detected: retrieve
+2026-04-25 03:59:51 | INFO     | rag_system | AGENT | Executing tool: retrieve_textbook
+2026-04-25 03:59:51 | INFO     | rag_system | AGENT | Tool complete | tool=retrieve_textbook | context_len=2566
+2026-04-25 03:59:51 | INFO     | rag_system | EVENT: agent_decision | input_preview=how many books do you have | intent=retrieve | tool=retrieve_textbook | context_len=2566
+2026-04-25 03:59:51 | INFO     | rag_system | BOT | intent=retrieve tool=retrieve_textbook history_turns=6 context_len=2566
+2026-04-25 03:59:51 | INFO     | rag_system | BOT | Calling Groq llama-3.1-8b-instant
+2026-04-25 03:59:54 | INFO     | rag_system | BOT | LLM responded | 376 words
+2026-04-25 03:59:54 | INFO     | rag_system | EVENT: bot_complete | session=default | intent=retrieve | tool=retrieve_textbook
+2026-04-25 04:01:03 | INFO     | rag_system | EVENT: ask | session=default | q=in your memory how many books are stored
+2026-04-25 04:01:03 | INFO     | rag_system | EVENT: bot_start | session=default | q=in your memory how many books are stored
+2026-04-25 04:01:03 | INFO     | rag_system | AGENT | Routing: 'in your memory how many books are stored'
+2026-04-25 04:01:03 | INFO     | rag_system | AGENT | Intent detected: retrieve
+2026-04-25 04:01:03 | INFO     | rag_system | AGENT | Executing tool: retrieve_textbook
+2026-04-25 04:01:03 | INFO     | rag_system | AGENT | Tool complete | tool=retrieve_textbook | context_len=2765
+2026-04-25 04:01:03 | INFO     | rag_system | EVENT: agent_decision | input_preview=in your memory how many books are stored | intent=retrieve | tool=retrieve_textbook | context_len=2765
+2026-04-25 04:01:03 | INFO     | rag_system | BOT | intent=retrieve tool=retrieve_textbook history_turns=6 context_len=2765
+2026-04-25 04:01:03 | INFO     | rag_system | BOT | Calling Groq llama-3.1-8b-instant
+2026-04-25 04:01:05 | INFO     | rag_system | BOT | LLM responded | 417 words
+2026-04-25 04:01:05 | INFO     | rag_system | EVENT: bot_complete | session=default | intent=retrieve | tool=retrieve_textbook
+2026-04-25 04:01:54 | INFO     | rag_system | EVENT: ask | session=default | q=from the ethanol pdf how can i start the business
+2026-04-25 04:01:54 | INFO     | rag_system | EVENT: bot_start | session=default | q=from the ethanol pdf how can i start the business
+2026-04-25 04:01:54 | INFO     | rag_system | AGENT | Routing: 'from the ethanol pdf how can i start the business'
+2026-04-25 04:01:54 | INFO     | rag_system | AGENT | Intent detected: retrieve
+2026-04-25 04:01:54 | INFO     | rag_system | AGENT | Executing tool: retrieve_textbook
+2026-04-25 04:01:54 | INFO     | rag_system | AGENT | Tool complete | tool=retrieve_textbook | context_len=2057
+2026-04-25 04:01:54 | INFO     | rag_system | EVENT: agent_decision | input_preview=from the ethanol pdf how can i start the | intent=retrieve | tool=retrieve_textbook | context_len=2057
+2026-04-25 04:01:54 | INFO     | rag_system | BOT | intent=retrieve tool=retrieve_textbook history_turns=6 context_len=2057
+2026-04-25 04:01:54 | INFO     | rag_system | BOT | Calling Groq llama-3.1-8b-instant
+2026-04-25 04:01:56 | INFO     | rag_system | BOT | LLM responded | 624 words
+2026-04-25 04:01:56 | INFO     | rag_system | EVENT: bot_complete | session=default | intent=retrieve | tool=retrieve_textbook
+2026-04-25 04:17:41 | INFO     | rag_system | SHUTDOWN | Closing DB pool
+2026-04-25 04:17:41 | INFO     | rag_system | DB | Pool closed
+2026-04-25 04:17:41 | INFO     | rag_system | SHUTDOWN | Done
+2026-04-25 04:17:45 | INFO     | rag_system | AGENT | Registered tools from function_calls.json: {'retrieve_textbook', 'define_term', 'search_wikipedia', 'compare_concepts', 'generate_quiz'}
+2026-04-25 04:17:45 | INFO     | rag_system | AGENT | Enabled tools from agent_settings.json: ['retrieve_textbook', 'define_term', 'search_wikipedia', 'generate_quiz', 'compare_concepts']
+2026-04-25 04:17:45 | INFO     | rag_system | STARTUP | RAG Assistant v3.0.0
+2026-04-25 04:17:45 | INFO     | rag_system | STARTUP | Setting up database
+2026-04-25 04:17:45 | INFO     | rag_system | DB | Connection pool created (min=1 max=10)
+2026-04-25 04:17:45 | INFO     | rag_system | DB | Tables verified
+2026-04-25 04:17:45 | INFO     | rag_system | STARTUP | Initialising encryption
+2026-04-25 04:17:45 | INFO     | rag_system | ENCRYPTION | Key loaded from environment
+2026-04-25 04:17:45 | INFO     | rag_system | STARTUP | Loading embedding model: all-MiniLM-L6-v2
+2026-04-25 04:18:04 | INFO     | rag_system | STARTUP | Embeddings ready
+2026-04-25 04:18:04 | INFO     | rag_system | STARTUP | Loading vector store
+2026-04-25 04:18:04 | INFO     | rag_system | VECTOR_FACTORY | Chroma | Loading from ./OS_base
+2026-04-25 04:18:06 | INFO     | rag_system | INGEST | Existing vector store loaded
+2026-04-25 04:18:06 | INFO     | rag_system | STARTUP | Vector store loaded — ready
+2026-04-25 04:18:06 | INFO     | rag_system | STARTUP | Groq client ready
+2026-04-25 04:18:06 | INFO     | rag_system | STARTUP | Ready — uploads dir: ./uploads
+2026-04-25 04:18:33 | INFO     | rag_system | SHUTDOWN | Closing DB pool
+2026-04-25 04:18:33 | INFO     | rag_system | DB | Pool closed
+2026-04-25 04:18:33 | INFO     | rag_system | SHUTDOWN | Done
+2026-04-25 04:18:36 | INFO     | rag_system | AGENT | Registered tools from function_calls.json: {'retrieve_textbook', 'search_wikipedia', 'compare_concepts', 'define_term', 'generate_quiz'}
+2026-04-25 04:18:36 | INFO     | rag_system | AGENT | Enabled tools from agent_settings.json: ['retrieve_textbook', 'define_term', 'search_wikipedia', 'generate_quiz', 'compare_concepts']
+2026-04-25 04:18:36 | INFO     | rag_system | STARTUP | RAG Assistant v3.0.0
+2026-04-25 04:18:36 | INFO     | rag_system | STARTUP | Setting up database
+2026-04-25 04:18:37 | INFO     | rag_system | DB | Connection pool created (min=1 max=10)
+2026-04-25 04:18:37 | INFO     | rag_system | DB | Tables verified
+2026-04-25 04:18:37 | INFO     | rag_system | STARTUP | Initialising encryption
+2026-04-25 04:18:37 | INFO     | rag_system | ENCRYPTION | Key loaded from environment
+2026-04-25 04:18:37 | INFO     | rag_system | STARTUP | Loading embedding model: all-MiniLM-L6-v2
+2026-04-25 04:18:55 | INFO     | rag_system | STARTUP | Embeddings ready
+2026-04-25 04:18:55 | INFO     | rag_system | STARTUP | Loading vector store
+2026-04-25 04:18:55 | INFO     | rag_system | VECTOR_FACTORY | Chroma | Loading from ./OS_base
+2026-04-25 04:18:57 | INFO     | rag_system | INGEST | Existing vector store loaded
+2026-04-25 04:18:57 | INFO     | rag_system | STARTUP | Vector store loaded — ready
+2026-04-25 04:18:57 | INFO     | rag_system | STARTUP | Groq client ready
+2026-04-25 04:18:57 | INFO     | rag_system | STARTUP | Ready — uploads dir: ./uploads
+2026-04-25 04:20:38 | INFO     | rag_system | EVENT: ask | session=default | q=how much capital is need to start the ethanol business
+2026-04-25 04:20:38 | INFO     | rag_system | EVENT: bot_start | session=default | q=how much capital is need to start the ethanol business
+2026-04-25 04:20:38 | INFO     | rag_system | AGENT | Routing: 'how much capital is need to start the ethanol business'
+2026-04-25 04:20:38 | INFO     | rag_system | AGENT | Intent detected: retrieve
+2026-04-25 04:20:38 | INFO     | rag_system | AGENT | Executing tool: retrieve_textbook
+2026-04-25 04:20:38 | INFO     | rag_system | AGENT | Tool complete | tool=retrieve_textbook | context_len=1969
+2026-04-25 04:20:38 | INFO     | rag_system | EVENT: agent_decision | input_preview=how much capital is need to start the et | intent=retrieve | tool=retrieve_textbook | context_len=1969
+2026-04-25 04:20:38 | INFO     | rag_system | BOT | intent=retrieve tool=retrieve_textbook history_turns=6 context_len=1969
+2026-04-25 04:20:38 | INFO     | rag_system | BOT | Calling Groq llama-3.1-8b-instant
+2026-04-25 04:20:40 | INFO     | rag_system | BOT | LLM responded | 679 words
+2026-04-25 04:20:40 | INFO     | rag_system | EVENT: bot_complete | session=default | intent=retrieve | tool=retrieve_textbook
+2026-04-25 04:48:48 | INFO     | rag_system | SHUTDOWN | Closing DB pool
+2026-04-25 04:48:48 | INFO     | rag_system | DB | Pool closed
+2026-04-25 04:48:48 | INFO     | rag_system | SHUTDOWN | Done
+2026-04-25 04:49:01 | INFO     | rag_system | AGENT | Registered tools from function_calls.json: {'define_term', 'compare_concepts', 'retrieve_textbook', 'generate_quiz', 'search_wikipedia'}
+2026-04-25 04:49:01 | INFO     | rag_system | AGENT | Enabled tools from agent_settings.json: ['retrieve_textbook', 'define_term', 'search_wikipedia', 'generate_quiz', 'compare_concepts']
+2026-04-25 04:49:01 | INFO     | rag_system | STARTUP | RAG Assistant v3.0.0
+2026-04-25 04:49:01 | INFO     | rag_system | STARTUP | Setting up database
+2026-04-25 04:49:01 | INFO     | rag_system | DB | Connection pool created (min=1 max=10)
+2026-04-25 04:49:01 | INFO     | rag_system | DB | Tables verified
+2026-04-25 04:49:01 | INFO     | rag_system | STARTUP | Initialising encryption
+2026-04-25 04:49:01 | INFO     | rag_system | ENCRYPTION | Key loaded from environment
+2026-04-25 04:49:01 | INFO     | rag_system | STARTUP | Loading embedding model: all-MiniLM-L6-v2
+2026-04-25 04:50:51 | INFO     | rag_system | STARTUP | Embeddings ready
+2026-04-25 04:50:51 | INFO     | rag_system | STARTUP | Loading vector store
+2026-04-25 04:50:51 | INFO     | rag_system | VECTOR_FACTORY | Chroma | Loading from ./OS_base
+2026-04-25 04:50:57 | INFO     | rag_system | INGEST | Existing vector store loaded
+2026-04-25 04:50:57 | INFO     | rag_system | STARTUP | Vector store loaded — ready
+2026-04-25 04:50:57 | INFO     | rag_system | STARTUP | Groq client ready
+2026-04-25 04:50:57 | INFO     | rag_system | STARTUP | Ready — uploads dir: ./uploads
+2026-04-25 04:52:33 | INFO     | rag_system | EVENT: ask | session=default | q=how much is need to start the ethanol business
+2026-04-25 04:52:33 | INFO     | rag_system | EVENT: bot_start | session=default | q=how much is need to start the ethanol business
+2026-04-25 04:52:33 | INFO     | rag_system | AGENT | Routing: 'how much is need to start the ethanol business'
+2026-04-25 04:52:33 | INFO     | rag_system | AGENT | Intent detected: retrieve
+2026-04-25 04:52:33 | INFO     | rag_system | AGENT | Executing tool: retrieve_textbook
+2026-04-25 04:52:33 | INFO     | rag_system | AGENT | Tool complete | tool=retrieve_textbook | context_len=3
+2026-04-25 04:52:33 | INFO     | rag_system | EVENT: agent_decision | input_preview=how much is need to start the ethanol bu | intent=retrieve | tool=retrieve_textbook | context_len=3
+2026-04-25 04:52:33 | ERROR    | rag_system | ROUTE | /ask failed: 1 validation error for AgentDecision
+context
+  Input should be a valid string [type=string_type, input_value=[Document(metadata={'sour...lsmodcommandandsearch')], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.12/v/string_type
+2026-04-25 05:12:22 | INFO     | rag_system | SHUTDOWN | Closing DB pool
+2026-04-25 05:12:22 | INFO     | rag_system | DB | Pool closed
+2026-04-25 05:12:22 | INFO     | rag_system | SHUTDOWN | Done
+2026-04-25 05:12:27 | INFO     | rag_system | AGENT | Registered tools from function_calls.json: {'retrieve_textbook', 'compare_concepts', 'generate_quiz', 'define_term', 'search_wikipedia'}
+2026-04-25 05:12:27 | INFO     | rag_system | AGENT | Enabled tools from agent_settings.json: ['retrieve_textbook', 'define_term', 'search_wikipedia', 'generate_quiz', 'compare_concepts']
+2026-04-25 05:12:27 | INFO     | rag_system | STARTUP | RAG Assistant v3.0.0
+2026-04-25 05:12:27 | INFO     | rag_system | STARTUP | Setting up database
+2026-04-25 05:12:27 | INFO     | rag_system | DB | Connection pool created (min=1 max=10)
+2026-04-25 05:12:27 | INFO     | rag_system | DB | Tables verified
+2026-04-25 05:12:27 | INFO     | rag_system | STARTUP | Initialising encryption
+2026-04-25 05:12:27 | INFO     | rag_system | ENCRYPTION | Key loaded from environment
+2026-04-25 05:12:27 | INFO     | rag_system | STARTUP | Loading embedding model: all-MiniLM-L6-v2
+2026-04-25 05:12:46 | INFO     | rag_system | STARTUP | Embeddings ready
+2026-04-25 05:12:46 | INFO     | rag_system | STARTUP | Loading vector store
+2026-04-25 05:12:46 | INFO     | rag_system | VECTOR_FACTORY | Chroma | Loading from ./OS_base
+2026-04-25 05:12:48 | INFO     | rag_system | INGEST | Existing vector store loaded
+2026-04-25 05:12:48 | INFO     | rag_system | STARTUP | Vector store loaded — ready
+2026-04-25 05:12:48 | INFO     | rag_system | STARTUP | Groq client ready
+2026-04-25 05:12:48 | INFO     | rag_system | STARTUP | Ready — uploads dir: ./uploads
+2026-04-25 05:13:24 | INFO     | rag_system | EVENT: ask | session=default | q=how much is need to start the ethanol business
+2026-04-25 05:13:24 | INFO     | rag_system | EVENT: bot_start | session=default | q=how much is need to start the ethanol business
+2026-04-25 05:13:24 | INFO     | rag_system | AGENT | Routing: 'how much is need to start the ethanol business'
+2026-04-25 05:13:24 | INFO     | rag_system | AGENT | Intent detected: retrieve
+2026-04-25 05:13:24 | INFO     | rag_system | AGENT | Executing tool: retrieve_textbook
+2026-04-25 05:13:25 | INFO     | rag_system | AGENT | Tool complete | tool=retrieve_textbook | context_len=1934
+2026-04-25 05:13:25 | INFO     | rag_system | EVENT: agent_decision | input_preview=how much is need to start the ethanol bu | intent=retrieve | tool=retrieve_textbook | context_len=1934
+2026-04-25 05:13:25 | INFO     | rag_system | BOT | intent=retrieve tool=retrieve_textbook history_turns=6 context_len=1934
+2026-04-25 05:13:25 | INFO     | rag_system | BOT | Calling Groq llama-3.1-8b-instant
+2026-04-25 05:13:27 | INFO     | rag_system | BOT | LLM responded | 835 words
+2026-04-25 05:13:27 | INFO     | rag_system | EVENT: bot_complete | session=default | intent=retrieve | tool=retrieve_textbook
+2026-04-25 05:14:36 | INFO     | rag_system | SHUTDOWN | Closing DB pool
+2026-04-25 05:14:36 | INFO     | rag_system | DB | Pool closed
+2026-04-25 05:14:36 | INFO     | rag_system | SHUTDOWN | Done
+2026-04-25 05:14:39 | INFO     | rag_system | AGENT | Registered tools from function_calls.json: {'generate_quiz', 'retrieve_textbook', 'compare_concepts', 'search_wikipedia', 'define_term'}
+2026-04-25 05:14:39 | INFO     | rag_system | AGENT | Enabled tools from agent_settings.json: ['retrieve_textbook', 'define_term', 'search_wikipedia', 'generate_quiz', 'compare_concepts']
+2026-04-25 05:14:39 | INFO     | rag_system | STARTUP | RAG Assistant v3.0.0
+2026-04-25 05:14:39 | INFO     | rag_system | STARTUP | Setting up database
+2026-04-25 05:14:39 | INFO     | rag_system | DB | Connection pool created (min=1 max=10)
+2026-04-25 05:14:39 | INFO     | rag_system | DB | Tables verified
+2026-04-25 05:14:39 | INFO     | rag_system | STARTUP | Initialising encryption
+2026-04-25 05:14:39 | INFO     | rag_system | ENCRYPTION | Key loaded from environment
+2026-04-25 05:14:39 | INFO     | rag_system | STARTUP | Loading embedding model: all-MiniLM-L6-v2
+2026-04-25 05:14:57 | INFO     | rag_system | STARTUP | Embeddings ready
+2026-04-25 05:14:57 | INFO     | rag_system | STARTUP | Loading vector store
+2026-04-25 05:14:57 | INFO     | rag_system | VECTOR_FACTORY | Chroma | Loading from ./OS_base
+2026-04-25 05:14:58 | INFO     | rag_system | INGEST | Existing vector store loaded
+2026-04-25 05:14:58 | INFO     | rag_system | STARTUP | Vector store loaded — ready
+2026-04-25 05:14:58 | INFO     | rag_system | STARTUP | Groq client ready
+2026-04-25 05:14:58 | INFO     | rag_system | STARTUP | Ready — uploads dir: ./uploads
+2026-04-25 05:15:16 | INFO     | rag_system | EVENT: ask | session=default | q=how much is need to start the ethanol business
+2026-04-25 05:15:16 | INFO     | rag_system | EVENT: bot_start | session=default | q=how much is need to start the ethanol business
+2026-04-25 05:15:16 | INFO     | rag_system | AGENT | Routing: 'how much is need to start the ethanol business'
+2026-04-25 05:15:16 | INFO     | rag_system | AGENT | Intent detected: retrieve
+2026-04-25 05:15:16 | INFO     | rag_system | AGENT | Executing tool: retrieve_textbook
+2026-04-25 05:15:16 | INFO     | rag_system | AGENT | Tool complete | tool=retrieve_textbook | context_len=8461
+2026-04-25 05:15:16 | INFO     | rag_system | EVENT: agent_decision | input_preview=how much is need to start the ethanol bu | intent=retrieve | tool=retrieve_textbook | context_len=8461
+2026-04-25 05:15:16 | INFO     | rag_system | BOT | intent=retrieve tool=retrieve_textbook history_turns=6 context_len=8461
+2026-04-25 05:15:16 | INFO     | rag_system | BOT | Calling Groq llama-3.1-8b-instant
+2026-04-25 05:15:17 | ERROR    | rag_system | BOT | Groq call failed: Error code: 413 - {'error': {'message': 'Request too large for model `llama-3.1-8b-instant` in organization `org_01knxw4mg8fqbr7ne1cvq5kfp7` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Requested 6049, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-04-25 05:15:17 | ERROR    | rag_system | ROUTE | /ask failed: Error code: 413 - {'error': {'message': 'Request too large for model `llama-3.1-8b-instant` in organization `org_01knxw4mg8fqbr7ne1cvq5kfp7` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Requested 6049, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-04-25 05:15:56 | INFO     | rag_system | SHUTDOWN | Closing DB pool
+2026-04-25 05:15:56 | INFO     | rag_system | DB | Pool closed
+2026-04-25 05:15:57 | INFO     | rag_system | SHUTDOWN | Done
+2026-04-25 05:16:00 | INFO     | rag_system | AGENT | Registered tools from function_calls.json: {'generate_quiz', 'define_term', 'retrieve_textbook', 'search_wikipedia', 'compare_concepts'}
+2026-04-25 05:16:00 | INFO     | rag_system | AGENT | Enabled tools from agent_settings.json: ['retrieve_textbook', 'define_term', 'search_wikipedia', 'generate_quiz', 'compare_concepts']
+2026-04-25 05:16:00 | INFO     | rag_system | STARTUP | RAG Assistant v3.0.0
+2026-04-25 05:16:00 | INFO     | rag_system | STARTUP | Setting up database
+2026-04-25 05:16:00 | INFO     | rag_system | DB | Connection pool created (min=1 max=10)
+2026-04-25 05:16:00 | INFO     | rag_system | DB | Tables verified
+2026-04-25 05:16:00 | INFO     | rag_system | STARTUP | Initialising encryption
+2026-04-25 05:16:00 | INFO     | rag_system | ENCRYPTION | Key loaded from environment
+2026-04-25 05:16:00 | INFO     | rag_system | STARTUP | Loading embedding model: all-MiniLM-L6-v2
+2026-04-25 05:16:15 | INFO     | rag_system | STARTUP | Embeddings ready
+2026-04-25 05:16:15 | INFO     | rag_system | STARTUP | Loading vector store
+2026-04-25 05:16:15 | INFO     | rag_system | VECTOR_FACTORY | Chroma | Loading from ./OS_base
+2026-04-25 05:16:16 | INFO     | rag_system | INGEST | Existing vector store loaded
+2026-04-25 05:16:16 | INFO     | rag_system | STARTUP | Vector store loaded — ready
+2026-04-25 05:16:16 | INFO     | rag_system | STARTUP | Groq client ready
+2026-04-25 05:16:16 | INFO     | rag_system | STARTUP | Ready — uploads dir: ./uploads
+2026-04-25 05:17:03 | INFO     | rag_system | EVENT: ask | session=default | q=how much is need to start the ethanol business
+2026-04-25 05:17:03 | INFO     | rag_system | EVENT: bot_start | session=default | q=how much is need to start the ethanol business
+2026-04-25 05:17:03 | INFO     | rag_system | AGENT | Routing: 'how much is need to start the ethanol business'
+2026-04-25 05:17:03 | INFO     | rag_system | AGENT | Intent detected: retrieve
+2026-04-25 05:17:03 | INFO     | rag_system | AGENT | Executing tool: retrieve_textbook
+2026-04-25 05:17:03 | INFO     | rag_system | AGENT | Tool complete | tool=retrieve_textbook | context_len=5218
+2026-04-25 05:17:03 | INFO     | rag_system | EVENT: agent_decision | input_preview=how much is need to start the ethanol bu | intent=retrieve | tool=retrieve_textbook | context_len=5218
+2026-04-25 05:17:03 | INFO     | rag_system | BOT | intent=retrieve tool=retrieve_textbook history_turns=6 context_len=5218
+2026-04-25 05:17:03 | INFO     | rag_system | BOT | Calling Groq llama-3.1-8b-instant
+2026-04-25 05:17:06 | INFO     | rag_system | BOT | LLM responded | 835 words
+2026-04-25 05:17:06 | INFO     | rag_system | EVENT: bot_complete | session=default | intent=retrieve | tool=retrieve_textbook

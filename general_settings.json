@@ -1,7 +1,7 @@
 {
   "app": {
     "name": "RAG Assistant",
-    "version": "2.0.0",
+    "version": "3.0.0",
     "log_level": "INFO",
     "log_file": "logs/app.log",
     "log_max_bytes": 5242880,
@@ -11,11 +11,13 @@
     "model_name": "all-MiniLM-L6-v2",
     "vector_db_dir": "./OS_base"
   },
+  "vector_provider": "chroma",
   "ingestion": {
     "chunk_size": 1000,
     "chunk_overlap": 200,
     "separators": ["\n\n", "\n", ".", " "],
-    "uploads_dir": "./uploads"
+    "uploads_dir": "./uploads",
+    "embed_batch_size": 64
   },
   "llm": {
     "provider": "groq",
@@ -24,7 +26,7 @@
     "max_tokens": 1024
   },
   "retrieval": {
-    "top_k": 3,
+    "top_k": 8,
     "history_limit": 6
   },
   "persona": {

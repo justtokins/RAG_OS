@@ -1,15 +1,17 @@
-langchain
-langchain-community
-langchain-huggingface
-langchain-text-splitters
-chromadb
-sentence-transformers
-pypdf
-groq
-psycopg2-binary
-python-dotenv
-Wikipedia
-watchdog==4.0.0
-pathlib==1.0.1
-cryptography==42.0.5
-python-dotenv==1.0.1
+langchain = 0.0.193
+langchain-community = 0.0.193
+langchain-huggingface-hub = 0.0.11
+langchain-text-splitters = 0.0.193
+chromadb = 0.4.2
+sentence-transformers = 2.3.0
+pypdf = 3.17.0
+groq = 0.6.0
+psycopg2-binary = 2.9.7
+python-dotenv = 1.0.1
+Wikipedia = 1.0.0
+watchdog = 4.0.0
+pathlib = 1.0.1
+cryptography = 42.0.5
+python-dotenv = 1.0.1
+sentence-transformers = 2.3.0
+streamlit = 1.25.0

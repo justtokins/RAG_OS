@@ -22,7 +22,7 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 from groq import Groq
 from langchain_community.embeddings import HuggingFaceEmbeddings
-
+from models import BookRecord # Ensure this is imported for type annotations
 from logger import get_logger
 from config_loader import general_settings
 
@@ -91,13 +91,20 @@ def _run_ingest(
     logger.info(f"BG_INGEST | job={job_id} | Starting: {filename}")
 
     try:
-        vector_store, chunk_count = ingest(
-            pdf_path=pdf_path,
-            embeddings=app_state.embeddings,
-        )
+        # 1. Ingest the new PDF into the PERSISTENT directory
+        # Ensure your ingest() function is configured to append to the same 'vector_db' folder
+        vector_store, chunk_count = ingest(pdf_path=pdf_path)
 
+        # 2. Re-load the GLOBAL store that now contains BOTH PDFs
+        # Use your factory to ensure it pulls the combined index
+        from ingest_pdf import load_existing
+        updated_full_store = load_existing(app_state.embeddings)
+
+        # 3. Hot-swap to the FULL combined store
+        if updated_full_store:
+            app_state.vector_db = updated_full_store
         # Hot-swap the vector store so /ask uses new knowledge immediately
-        app_state.vector_db = vector_store
+        #app_state.vector_db = vector_store
 
         log_ingestion(filename, chunk_count)
 
@@ -285,26 +292,31 @@ def list_jobs():
     return {"jobs": [{"job_id": jid, **data} for jid, data in _jobs.items()]}
 
 
-@app.get("/books", response_model=BooksResponse)
-def books():
-    logger.debug("ROUTE | GET /books")
-    return BooksResponse(books=list_books())
 
+
+@app.get("/books", response_model=BooksResponse)
+async def books():  # Added async
+    logger.debug("ROUTE | GET /books")
+    
+    # Await the coroutine to get the actual data
+    data = await list_books() 
+    
+    # Map the dictionaries to BookRecord objects to satisfy Pydantic
+    book_records = [BookRecord(**b) for b in data]
+    
+    return BooksResponse(books=book_records)
 
 @app.post("/ask", response_model=AnswerResponse)
-def ask(
+async def ask( # 1. Add 'async' here
     body:       QuestionRequest,
     vector_db=  Depends(get_vector_db),
     groq_client=Depends(get_groq_client),
 ):
-    """
-    Ask a question. Agent routes to the right tool, LLM answers,
-    conversation is encrypted and stored in PostgreSQL.
-    """
     logger.event("ask", session=body.session_id, q=body.question[:60])
 
     try:
-        result = bot(
+        # 2. Add 'await' here to resolve the dictionary
+        result = await bot(
             question=body.question,
             vector_db=vector_db,
             client=groq_client,
@@ -315,6 +327,7 @@ def ask(
         logger.error(f"ROUTE | /ask failed: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+    # 3. Now result["answer"] will work because result is a dict, not a Coroutine
     return AnswerResponse(
         answer=result["answer"],
         session_id=body.session_id,

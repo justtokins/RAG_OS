@@ -1,82 +1,92 @@
 """
-Database connection pooling + encrypted persistence.
+database_pool.py — PostgreSQL with async write support.
 
-Encryption contract:
-    WRITE — content is encrypted before INSERT. What lives in
-            PostgreSQL is ciphertext, never plaintext.
-    READ  — content is decrypted after SELECT. The rest of the
-            system only ever sees plaintext.
+Two classes of operations:
 
-This means:
-    - A compromised database dump reveals nothing readable.
-    - A compromised DB connection (MITM at the wire layer) sees ciphertext.
-    - Only the application holding ENCRYPTION_KEY can read the data.
+WRITES (async) — save_message, log_ingestion
+    Called after the LLM responds. The user already has their answer —
+    there is no reason to make them wait while we write to the DB.
+    asyncio.to_thread() runs the psycopg2 call in a thread pool,
+    releasing the event loop immediately.
 
-Fallback behaviour:
-    If decryption fails on a row (e.g. old unencrypted rows from before
-    this module was added), the raw value is returned with a WARNING log.
-    This prevents the entire history fetch from crashing on legacy data.
+    Fire-and-forget pattern for save_message:
+        asyncio.create_task(async_save_message(...))
+    The task runs in the background. If it fails, it logs an error
+    but does not affect the response the user already received.
+
+READS (sync) — get_history, list_books
+    Called before the LLM responds — the prompt depends on history.
+    Must complete before we can proceed. Kept synchronous and run
+    via asyncio.to_thread() at the call site in query.py.
+
+Why asyncio.to_thread() instead of asyncpg?
+    asyncpg requires rewriting all SQL to use its parameter style
+    ($1, $2 vs %s) and a separate connection pool API. asyncio.to_thread()
+    gives us async behaviour with zero migration cost — the same
+    psycopg2 pool, same SQL, same error handling. The thread pool used
+    by asyncio.to_thread() defaults to ThreadPoolExecutor(max_workers=32)
+    which is more than enough for concurrent DB writes.
+
+Encryption:
+    All chat content is encrypted before INSERT and decrypted after SELECT.
+    DB admins see ciphertext. The ENCRYPTION_KEY never touches the database.
 """
+import asyncio
 import os
+
 import psycopg2
 from psycopg2 import pool
 from dotenv import load_dotenv
+
 
 from encryption import get_encryption
 from logger import get_logger
 
 load_dotenv()
-
 logger = get_logger()
 
+_pool: pool.SimpleConnectionPool | None = None
+
+
 # ── Connection pool ───────────────────────────────────────────────────────────
-_connection_pool = None
 
-
-def get_connection_pool():
-    """Lazily create the global connection pool."""
-    global _connection_pool
-    if _connection_pool is None:
+def get_pool() -> pool.SimpleConnectionPool:
+    global _pool
+    if _pool is None:
         db_url = os.getenv("DATABASE_URL")
         if not db_url:
-            raise RuntimeError("DATABASE_URL not set in environment")
-        _connection_pool = psycopg2.pool.SimpleConnectionPool(
-            minconn=1,
-            maxconn=10,
-            dsn=db_url,
-        )
-        logger.info("DB | Connection pool created (min=1, max=10)")
-    return _connection_pool
+            raise RuntimeError("DATABASE_URL not set")
+        
+        _pool = pool.SimpleConnectionPool(minconn=1, maxconn=10, dsn=db_url)
+        logger.info("DB | Connection pool created (min=1 max=10)")
+
+    # Explicitly tell Pylance: "If we got here, _pool is definitely the pool"
+    if _pool is None:
+        raise RuntimeError("Failed to initialize database pool")
+        
+    return _pool
 
 
-def get_connection():
-    return get_connection_pool().getconn()
+def _conn():
+    return get_pool().getconn()
 
 
-def close_connection(conn):
-    get_connection_pool().putconn(conn)
+def _release(conn):
+    get_pool().putconn(conn)
 
 
 def close_all_connections():
-    """Return all connections to pool and destroy it. Call on shutdown."""
-    global _connection_pool
-    if _connection_pool:
-        _connection_pool.closeall()
-        _connection_pool = None
-        logger.info("DB | Connection pool closed")
+    global _pool
+    if _pool:
+        _pool.closeall()
+        _pool = None
+        logger.info("DB | Pool closed")
 
 
-# ── Schema setup ──────────────────────────────────────────────────────────────
+# ── Schema ────────────────────────────────────────────────────────────────────
 
 def setup_db():
-    """
-    Create tables if they do not exist. Called once at startup.
-
-    chat_history.content stores ENCRYPTED ciphertext — never plaintext.
-    ingested_books.filename stores the original filename in plaintext
-    (not sensitive — it is just a book title for the /books endpoint).
-    """
-    conn = get_connection()
+    conn = _conn()
     try:
         cur = conn.cursor()
         cur.execute("""
@@ -95,96 +105,41 @@ def setup_db():
             );
         """)
         conn.commit()
-        logger.info("DB | Tables verified / created")
+        logger.info("DB | Tables verified")
     except Exception as e:
         logger.error(f"DB | setup_db failed: {e}")
         raise
     finally:
-        close_connection(conn)
+        _release(conn)
 
 
-# ── Chat history ──────────────────────────────────────────────────────────────
+# ── Sync write primitives (called by async wrappers) ─────────────────────────
 
-def save_message(session_id: str, role: str, content: str):
-    """
-    Encrypt content and persist to PostgreSQL.
+def _sync_save_message(session_id: str, role: str, content: str):
+    """Encrypt and insert one message. Runs in thread pool."""
+    enc              = get_encryption()
+    encrypted        = enc.encrypt(content)
 
-    The plaintext content is encrypted to ciphertext before the
-    INSERT. If you inspect the database directly you will see
-    Fernet tokens, not readable text.
-    """
-    enc = get_encryption()
-    try:
-        encrypted_content = enc.encrypt(content)
-    except Exception as e:
-        logger.error(f"DB | Encryption failed for session={session_id}: {e}")
-        raise
-
-    conn = get_connection()
+    conn = _conn()
     try:
         cur = conn.cursor()
         cur.execute(
             "INSERT INTO chat_history (session_id, role, content) "
             "VALUES (%s, %s, %s)",
-            (session_id, role, encrypted_content),
+            (session_id, role, encrypted),
         )
         conn.commit()
-        logger.debug(f"DB | Message saved | session={session_id} | role={role}")
+        logger.debug(f"DB | Saved | session={session_id} role={role}")
     except Exception as e:
-        logger.error(f"DB | save_message failed: {e}")
+        logger.error(f"DB | _sync_save_message failed: {e}")
         raise
     finally:
-        close_connection(conn)
+        _release(conn)
 
 
-def get_history(session_id: str, limit: int = 6) -> list:
-    """
-    Fetch and decrypt the most recent `limit` messages for a session.
-
-    Decryption failure on a row logs a WARNING and returns the raw
-    ciphertext as a fallback — this handles legacy unencrypted rows
-    without crashing the entire history fetch.
-    """
-    enc = get_connection_pool()   # just checking pool is alive
-    enc = get_encryption()
-
-    conn = get_connection()
-    try:
-        cur = conn.cursor()
-        cur.execute(
-            "SELECT role, content FROM chat_history "
-            "WHERE session_id = %s "
-            "ORDER BY created_at DESC LIMIT %s",
-            (session_id, limit),
-        )
-        rows = cur.fetchall()
-    except Exception as e:
-        logger.error(f"DB | get_history failed: {e}")
-        raise
-    finally:
-        close_connection(conn)
-
-    history = []
-    for role, ciphertext in reversed(rows):
-        try:
-            plaintext = enc.decrypt(ciphertext)
-        except Exception:
-            logger.warning(
-                f"DB | Decryption failed for session={session_id} role={role} "
-                f"— returning raw value (possible legacy unencrypted row)"
-            )
-            plaintext = ciphertext   # graceful fallback
-
-        history.append({"role": role, "content": plaintext})
-
-    logger.debug(f"DB | History fetched | session={session_id} | rows={len(history)}")
-    return history
-
-
-# ── Book ingestion log ────────────────────────────────────────────────────────
-
-def log_ingestion(filename: str, chunk_count: int):
-    conn = get_connection()
+def _sync_log_ingestion(filename: str, chunk_count: int):
+    """Log one ingestion event. Runs in thread pool."""
+    conn = _conn()
     try:
         cur = conn.cursor()
         cur.execute(
@@ -192,16 +147,88 @@ def log_ingestion(filename: str, chunk_count: int):
             (filename, chunk_count),
         )
         conn.commit()
-        logger.info(f"DB | Ingestion logged | file={filename} | chunks={chunk_count}")
+        logger.info(f"DB | Ingestion logged | {filename} | {chunk_count} chunks")
     except Exception as e:
-        logger.error(f"DB | log_ingestion failed: {e}")
+        logger.error(f"DB | _sync_log_ingestion failed: {e}")
         raise
     finally:
-        close_connection(conn)
+        _release(conn)
 
 
-def list_books() -> list:
-    conn = get_connection()
+# ── Async write wrappers ──────────────────────────────────────────────────────
+
+async def async_save_message(session_id: str, role: str, content: str):
+    """
+    Non-blocking message save.
+
+    asyncio.to_thread() submits _sync_save_message to the default
+    ThreadPoolExecutor and returns control to the event loop immediately.
+    The DB write completes in the background.
+
+    Usage (fire-and-forget — most common):
+        asyncio.create_task(async_save_message(session_id, role, content))
+
+    Usage (wait for confirmation — use only if you need the write to
+    complete before the next operation):
+        await async_save_message(session_id, role, content)
+    """
+    await asyncio.to_thread(_sync_save_message, session_id, role, content)
+
+
+async def async_log_ingestion(filename: str, chunk_count: int):
+    """Non-blocking ingestion log."""
+    await asyncio.to_thread(_sync_log_ingestion, filename, chunk_count)
+
+
+# ── Sync read operations (awaited at call site via to_thread) ─────────────────
+
+def _sync_get_history(session_id: str, limit: int) -> list[dict]:
+    """
+    Fetch and decrypt conversation history. Sync — runs in thread pool
+    via asyncio.to_thread() in query.py.
+    """
+    enc  = get_encryption()
+    conn = _conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "SELECT role, content FROM chat_history "
+            "WHERE session_id = %s ORDER BY created_at DESC LIMIT %s",
+            (session_id, limit),
+        )
+        rows = cur.fetchall()
+    except Exception as e:
+        logger.error(f"DB | _sync_get_history failed: {e}")
+        raise
+    finally:
+        _release(conn)
+
+    history = []
+    for role, ciphertext in reversed(rows):
+        try:
+            plaintext = enc.decrypt(ciphertext)
+        except Exception:
+            logger.warning(
+                f"DB | Decryption failed session={session_id} role={role} "
+                f"— returning raw (possible legacy unencrypted row)"
+            )
+            plaintext = ciphertext
+        history.append({"role": role, "content": plaintext})
+
+    logger.debug(f"DB | History | session={session_id} | rows={len(history)}")
+    return history
+
+
+async def get_history(session_id: str, limit: int = 6) -> list[dict]:
+    """
+    Async wrapper for history fetch.
+    Awaited in query.py so the event loop is not blocked during the DB read.
+    """
+    return await asyncio.to_thread(_sync_get_history, session_id, limit)
+
+
+def _sync_list_books() -> list[dict]:
+    conn = _conn()
     try:
         cur = conn.cursor()
         cur.execute(
@@ -218,7 +245,25 @@ def list_books() -> list:
             for r in rows
         ]
     except Exception as e:
-        logger.error(f"DB | list_books failed: {e}")
+        logger.error(f"DB | _sync_list_books failed: {e}")
         raise
     finally:
-        close_connection(conn)
+        _release(conn)
+
+
+async def list_books() -> list[dict]:
+    return await asyncio.to_thread(_sync_list_books)
+
+
+# ── Backward-compatible sync aliases ─────────────────────────────────────────
+# Some parts of the system (background tasks that cannot await) still use
+# the sync versions directly. Keep these available.
+
+def save_message(session_id: str, role: str, content: str):
+    """Sync alias — use only in non-async contexts (background threads)."""
+    _sync_save_message(session_id, role, content)
+
+
+def log_ingestion(filename: str, chunk_count: int):
+    """Sync alias — use only in non-async contexts (background threads)."""
+    _sync_log_ingestion(filename, chunk_count)
