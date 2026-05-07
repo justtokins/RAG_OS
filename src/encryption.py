@@ -26,7 +26,7 @@ import os
 from typing import Union
 
 from cryptography.fernet import Fernet, InvalidToken
-from logger import get_logger
+from .logger import get_logger
 
 logger = get_logger()
 
