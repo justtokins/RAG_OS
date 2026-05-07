@@ -24,7 +24,7 @@ import requests
 import streamlit as st
 
 # ── Config loading ─────────────────────────────────────────────────────────────
-CONFIG_PATH = Path(__file__).parent / "frontend_config.json"
+CONFIG_PATH = Path(__file__).resolve().parent.parent / "config" / "frontend_config.json"
 
 @st.cache_data
 def load_config() -> dict:
