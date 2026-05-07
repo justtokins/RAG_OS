@@ -35,8 +35,8 @@ from langchain_core.vectorstores import VectorStore
 from langchain_core.documents import Document
 from langchain_core.messages import HumanMessage, AIMessage
 
-from config_loader import general_settings
-from logger import get_logger
+from .config_loader import general_settings
+from .logger import get_logger
 
 logger = get_logger()
 
