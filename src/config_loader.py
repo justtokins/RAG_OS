@@ -9,7 +9,7 @@ from typing import Any, Dict
 class ConfigLoader:
     """Load and validate configuration files with schema checking."""
     
-    BASE_DIR = Path(__file__).resolve().parent
+    BASE_DIR = Path(__file__).resolve().parent.parent / "config"
     
     # Define schema for each config file
     SCHEMAS = {
