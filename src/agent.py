@@ -1,15 +1,15 @@
 import re
 from langchain_community.vectorstores import Chroma
-from tools import (
+from .tools import (
     tool_retrieve_textbook,
     tool_define_term,
     tool_search_wikipedia,
     tool_generate_quiz,
     tool_compare_concepts,
 )
-from config_loader import agent_settings, function_calls, general_settings
-from logger import get_logger
-from models import AgentDecision
+from .config_loader import agent_settings, function_calls, general_settings
+from .logger import get_logger
+from .models import AgentDecision
 
 logger = get_logger()
 
