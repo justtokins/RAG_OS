@@ -15,12 +15,12 @@ import asyncio
 from langchain_core.vectorstores import VectorStore
 from groq import Groq
 
-from database_pool import get_history, async_save_message
-from agent import route
-from formatter import OutputFormatter
-from config_loader import general_settings
-from logger import get_logger
-from models import AgentDecision
+from .database_pool import get_history, async_save_message
+from .agent import route
+from .formatter import OutputFormatter
+from .config_loader import general_settings
+from .logger import get_logger
+from .models import AgentDecision
 
 logger    = get_logger()
 formatter = OutputFormatter()
@@ -50,7 +50,10 @@ CONTEXT (retrieved by agent):
 QUESTION: {question}
 
 INSTRUCTIONS:
+
 - Use the context as your primary source.
+-You have access to technical textbooks and business documents.
+-Always prioritize specific data from the documents over general analogies unless the user asks for an analogy.
 - Define every technical term in plain English on first use.
 - Give a real-world analogy for every concept.
 - If context contains QUIZ GENERATION REQUEST → produce the quiz.
