@@ -31,8 +31,8 @@
   },
   "persona": {
     "name": "OS_Helper",
-    "role": "expert Operating Systems assistant",
-    "tone": "clear, friendly, uses real-world analogies",
+    "role": "expert Assistant",
+    "tone": "clear, friendly, uses real-world analogies when helpful",
     "target_level": "senior high school student"
   }
 }
