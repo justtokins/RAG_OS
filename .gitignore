@@ -1,8 +1,40 @@
+# Environment
 .env
-OS_base/
+.env.local
+.env.*.local
+
+# Python
 __pycache__/
 *.pyc
-*.pdf
-.DS_Store
+*.pyo
+*.egg-info/
+dist/
+build/
+.Python
 venv/
 env/
+ENV/
+
+# Project
+OS_base/
+uploads/
+logs/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Data
+*.pdf
+faiss_index/
+data/
+.ipynb_checkpoints/
+
+# Database
+*.sqlite3
+*.db
