@@ -39,8 +39,8 @@ from psycopg2 import pool
 from dotenv import load_dotenv
 
 
-from encryption import get_encryption
-from logger import get_logger
+from .encryption import get_encryption
+from .logger import get_logger
 
 load_dotenv()
 logger = get_logger()
