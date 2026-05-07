@@ -16,7 +16,7 @@ from typing import Optional
 class StructuredLogger:
     """Structured logger with console and file outputs."""
     
-    LOG_DIR = Path(__file__).resolve().parent / "logs"
+    LOG_DIR = Path(__file__).resolve().parent.parent / "logs"
     
     def __init__(
         self,
