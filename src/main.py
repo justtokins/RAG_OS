@@ -22,25 +22,25 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 from groq import Groq
 from langchain_community.embeddings import HuggingFaceEmbeddings
-from models import BookRecord # Ensure this is imported for type annotations
-from logger import get_logger
-from config_loader import general_settings
+from .models import BookRecord # Ensure this is imported for type annotations
+from .logger import get_logger
+from .config_loader import general_settings
 
 logger = get_logger(
     level=general_settings["app"]["log_level"],
     log_file=general_settings["app"]["log_file"].split("/")[-1],
 )
 
-from models import (
+from .models import (
     QuestionRequest, AnswerResponse,
     IngestResponse, BooksResponse,
 )
-from database_pool import (
+from .database_pool import (
     setup_db, log_ingestion, list_books, close_all_connections,
 )
-from encryption import get_encryption
-from ingest_pdf import ingest, load_existing
-from query import bot
+from .encryption import get_encryption
+from .ingest_pdf import ingest, load_existing
+from .query import bot
 
 load_dotenv()
 
@@ -103,7 +103,7 @@ def _run_ingest(
 
         # 2. Re-load the GLOBAL store that now contains BOTH PDFs
         # Use your factory to ensure it pulls the combined index
-        from ingest_pdf import load_existing
+        from .ingest_pdf import load_existing
         updated_full_store = load_existing(app_state.embeddings)
 
         # 3. Hot-swap to the FULL combined store
